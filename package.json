@@ -1,0 +1,33 @@
+{
+  "name": "hornlog-server",
+  "version": "1.0.0",
+  "description": "API for HornLog App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lou-i3/hornlog-server.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequelize",
+    "mysql",
+    "rest",
+    "api"
+  ],
+  "author": "Lou-i3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lou-i3/hornlog-server/issues"
+  },
+  "homepage": "https://github.com/Lou-i3/hornlog-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.14.0"
+  }
+}
