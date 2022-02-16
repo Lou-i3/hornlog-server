@@ -18,7 +18,6 @@ import { sign } from 'jsonwebtoken'
 
 import { Context } from '../context';
 
-export const DateTime = asNexusMethod(DateTimeResolver, 'date')
 
 // definitions 
 export const User = objectType({
@@ -34,18 +33,28 @@ export const User = objectType({
         t.field('createdAt', { type: 'DateTime' })
         t.nonNull.field('updatedAt', { type: 'DateTime' })
         t.nonNull.field('lastLogin', { type: 'DateTime' })
+        t.list.field('hooks', {
+            type: 'Hook',
+            resolve: (parent, _, context) => {
+                return context.prisma.user
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .hooks()
+            },
+        })
     },
 })
 
 export const Role = enumType({
     name: "Role",
-    members: ['ADMIN', 'MODERATOR','USER'],
+    members: ['ADMIN', 'MODERATOR', 'USER'],
     description: 'Defines authorizations'
 })
 
 
 //queries 
-export const Query = objectType({
+export const UserQuery = objectType({
     name: 'Query',
     definition(t) {
         // Query for all users
@@ -72,7 +81,7 @@ export const Query = objectType({
 })
 
 // mutations 
-export const Mutation = objectType({
+export const UserMutation = objectType({
     name: 'Mutation',
     definition(t) {
 

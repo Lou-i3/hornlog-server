@@ -36,11 +36,17 @@ const rules = {
 }
 
 export const permissions = shield({
+
   Query: {
     allUsers: rules.isUserAdmin,
     me: rules.isAuthenticatedUser,
     ok: rules.isAuthenticatedUser,
+    myHooks: rules.isAuthenticatedUser,
   },
   Mutation: {
   },
+  Hook: rules.isAuthenticatedUser,
+},
+{
+  debug: true
 })

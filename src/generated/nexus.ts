@@ -40,6 +40,8 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  HookType: "Date" | "Friend" | "Sexting" | "one_night_stand" | "self_pleasure" | "sex_friend"
+  ProtectionType: "Protected" | "Unprotected" | "not_required"
   Role: "ADMIN" | "MODERATOR" | "USER"
   SortOrder: "asc" | "desc"
 }
@@ -57,6 +59,22 @@ export interface NexusGenObjects {
   AuthPayload: { // root type
     token?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
+  }
+  Hook: { // root type
+    addToAppleHealth?: boolean | null; // Boolean
+    archived?: boolean | null; // Boolean
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    duration?: number | null; // Int
+    grade?: number | null; // Int
+    hookType: NexusGenEnums['HookType']; // HookType!
+    id: string; // ID!
+    mood?: string | null; // String
+    note?: string | null; // String
+    orgasm?: boolean | null; // Boolean
+    porn?: boolean | null; // Boolean
+    protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Mutation: {};
   Query: {};
@@ -89,20 +107,40 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
+  Hook: { // field return type
+    addToAppleHealth: boolean | null; // Boolean
+    archived: boolean | null; // Boolean
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    duration: number | null; // Int
+    grade: number | null; // Int
+    hookType: NexusGenEnums['HookType']; // HookType!
+    id: string; // ID!
+    mood: string | null; // String
+    note: string | null; // String
+    orgasm: boolean | null; // Boolean
+    owner: NexusGenRootTypes['User']; // User!
+    porn: boolean | null; // Boolean
+    protectionType: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Mutation: { // field return type
     addUser: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signupUser: NexusGenRootTypes['User']; // User!
   }
   Query: { // field return type
+    allHooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     allUsers: NexusGenRootTypes['User'][]; // [User!]!
     me: NexusGenRootTypes['User'] | null; // User
+    myHooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     ok: string | null; // String
   }
   User: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     displayName: string | null; // String
     email: string; // String!
+    hooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     id: string; // ID!
     lastLogin: NexusGenScalars['DateTime']; // DateTime!
     password: string; // String!
@@ -118,20 +156,40 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
     user: 'User'
   }
+  Hook: { // field return type name
+    addToAppleHealth: 'Boolean'
+    archived: 'Boolean'
+    createdAt: 'DateTime'
+    dateTime: 'DateTime'
+    duration: 'Int'
+    grade: 'Int'
+    hookType: 'HookType'
+    id: 'ID'
+    mood: 'String'
+    note: 'String'
+    orgasm: 'Boolean'
+    owner: 'User'
+    porn: 'Boolean'
+    protectionType: 'ProtectionType'
+    updatedAt: 'DateTime'
+  }
   Mutation: { // field return type name
     addUser: 'AuthPayload'
     login: 'AuthPayload'
     signupUser: 'User'
   }
   Query: { // field return type name
+    allHooks: 'Hook'
     allUsers: 'User'
     me: 'User'
+    myHooks: 'Hook'
     ok: 'String'
   }
   User: { // field return type name
     createdAt: 'DateTime'
     displayName: 'String'
     email: 'String'
+    hooks: 'Hook'
     id: 'ID'
     lastLogin: 'DateTime'
     password: 'String'
