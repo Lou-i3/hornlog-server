@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model RefreshToken {
+  id         Int       @id @default(autoincrement())
+  token      String?   @db.VarChar(255)
+  expiryDate DateTime? @db.DateTime(0)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  userId     Int?
+  user       User?     @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "userId")
+  @@map("refreshToken")
+}
+
+model User {
+  id                 Int            @id @default(autoincrement())
+  username           String         @unique
+  displayName        String?        @db.VarChar(255)
+  email              String         @unique
+  password           String?
+  active             Boolean?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @default(now()) @updatedAt
+  refreshTokens      RefreshToken[]
+  role               Role           @default(USER)
+  resetPasswordToken String         @default("")
+  lastLoginAt        DateTime?      @default(now())
+
+  @@map("user")
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
