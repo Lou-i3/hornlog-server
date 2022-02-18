@@ -29,6 +29,19 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  HookCreateInput: { // input type
+    addToAppleHealth?: boolean | null; // Boolean
+    archived?: boolean | null; // Boolean
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    duration?: number | null; // Int
+    grade?: number | null; // Int
+    hookType: NexusGenEnums['HookType']; // HookType!
+    mood?: string | null; // String
+    note?: string | null; // String
+    orgasm?: boolean | null; // Boolean
+    porn?: boolean | null; // Boolean
+    protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+  }
   UserCreateInput: { // input type
     email: string; // String!
     name?: string | null; // String
@@ -125,6 +138,7 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Mutation: { // field return type
+    addHook: NexusGenRootTypes['Hook']; // Hook!
     addUser: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signupUser: NexusGenRootTypes['User']; // User!
@@ -174,6 +188,7 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Mutation: { // field return type name
+    addHook: 'Hook'
     addUser: 'AuthPayload'
     login: 'AuthPayload'
     signupUser: 'User'
@@ -202,6 +217,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addHook: { // args
+      data: NexusGenInputs['HookCreateInput']; // HookCreateInput!
+    }
     addUser: { // args
       displayName: string; // String!
       email: string; // String!

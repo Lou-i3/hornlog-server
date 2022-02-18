@@ -30,6 +30,20 @@ type Hook {
   updatedAt: DateTime!
 }
 
+input HookCreateInput {
+  addToAppleHealth: Boolean
+  archived: Boolean
+  dateTime: DateTime!
+  duration: Int
+  grade: Int
+  hookType: HookType!
+  mood: String
+  note: String
+  orgasm: Boolean
+  porn: Boolean
+  protectionType: ProtectionType
+}
+
 """Types of Hook"""
 enum HookType {
   Date
@@ -41,6 +55,7 @@ enum HookType {
 }
 
 type Mutation {
+  addHook(data: HookCreateInput!): Hook!
   addUser(displayName: String!, email: String!, password: String, username: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload
   signupUser(data: UserCreateInput!): User!

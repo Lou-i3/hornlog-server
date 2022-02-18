@@ -89,17 +89,63 @@ export const HookQuery = extendType({
                 return context.prisma.hook.findMany()
             },
         })
-        // Query for currently logged in user
-        // t.nullable.field('me', {
-        //     type: 'User',
-        //     resolve: (_parent, _args, context: Context) => {
-        //         const userId = getUserId(context)
-        //         return context.prisma.user.findUnique({
-        //             where: {
-        //                 id: Number(userId),
-        //             },
-        //         })
-        //     },
-        // })
+    },
+})
+
+// mutations 
+export const HookMutation = extendType({
+    type: 'Mutation',
+    definition(t) {
+
+        t.nonNull.field('addHook', {
+            type: 'Hook',
+            args: {
+                data: nonNull(
+                    arg({
+                        type: 'HookCreateInput',
+                    }),
+                ),
+            },
+            resolve: (_, args, context) => {
+                const userId = getUserId(context)
+
+                return context.prisma.hook.create({
+                    data: {
+                        hookType: args.data.hookType,
+                        owner: {
+                            connect: { id: userId },
+                          },
+                        dateTime: args.data.dateTime,
+                        duration: args.data.duration,
+                        orgasm: args.data.orgasm,
+                        porn: args.data.porn,
+                        note: args.data.note,
+                        grade: args.data.grade,
+                        protected: args.data.protected,
+                        mood: args.data.mood,
+                        addToAppleHealth: args.data.addToAppleHealth,
+                        archived: args.data.archived,
+                    },
+                })
+            },
+        })
+
+    },
+})
+
+export const HookCreateInput = inputObjectType({
+    name: 'HookCreateInput',
+    definition(t) {
+        t.nonNull.field('hookType', { type: 'HookType' })
+        t.nonNull.field('dateTime', { type: 'DateTime' })
+        t.int('duration')
+        t.boolean('orgasm')
+        t.boolean('porn')
+        t.string('note')
+        t.int('grade')
+        t.field('protectionType', { type: 'ProtectionType' })
+        t.string('mood')
+        t.boolean('addToAppleHealth')
+        t.boolean('archived')
     },
 })

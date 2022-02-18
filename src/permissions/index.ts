@@ -44,6 +44,7 @@ export const permissions = shield({
     myHooks: rules.isAuthenticatedUser,
   },
   Mutation: {
+    addHook: rules.isAuthenticatedUser,
   },
   Hook: rules.isAuthenticatedUser,
 },
