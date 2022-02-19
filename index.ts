@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server';
+const { ApolloServer } = require('apollo-server');
 import { schema } from './src/schema';
 import { createContext } from './src/context';
 

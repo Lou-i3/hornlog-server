@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "Server API for HornLog",
     "main": "index.js",
-
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Lou-i3/hornlog-server.git"
@@ -16,10 +15,9 @@
         "graphql",
         "api"
     ],
-
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "run": "node index.js",
+        "test": "echo \"Test: no test specified\" && exit 0",
+        "run": "ts-node index.ts",
         "dev": "ts-node-dev --no-notify --respawn --transpile-only index"
     },
     "author": "Lou-i3",
@@ -29,6 +27,7 @@
     },
     "homepage": "https://github.com/Lou-i3/hornlog-server#readme",
     "devDependencies": {
+        "@types/graphql": "^14.5.0",
         "prisma": "^3.9.2",
         "ts-node": "^10.5.0"
     },
