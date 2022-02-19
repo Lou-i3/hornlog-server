@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag loui3/hornlog-server:time-$(date +%s)
-    - name: Push the Docker image
-      run: docker push loui3/hornlog-server:time-$(date +%s)
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: loui3/hornlog-server:latest
