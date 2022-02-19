@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag hornlog-server:time-$(date +%s)
     - name: Push the Docker image
-      run: docker push loui3/hornlog-server:time-$(date +%s)
+      run: docker push hornlog-server:time-$(date +%s)
