@@ -5,7 +5,9 @@ FROM node:17.5.0
 EXPOSE 4000
 # Setup env variables
 # ENV NODE_ENV production
-ENV DATABASE_URL "mysql://user:password@ip:3306/dtbname?schema=public"
+ENV DATABASE_URL mysql://user:password@ip:3306/dtbname?schema=public
+ENV FIREBASE_PRIVATE_KEY firebase private 
+ENV FIREBASE_CLIENT_EMAIL firebase client email
 # Copies index.js and the two package files from the local 
 # directory to a new app directory on the container
 COPY index.ts package.json package-lock.json schema.graphql tsconfig.json .env ./

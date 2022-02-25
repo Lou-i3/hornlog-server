@@ -4,7 +4,6 @@
  */
 
 
-import type { Context } from "./../context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -40,6 +39,7 @@ export interface NexusGenInputs {
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
+    protected?: boolean | null; // Boolean
     protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
   }
   UserCreateInput: { // input type
@@ -49,6 +49,7 @@ export interface NexusGenInputs {
   UserUniqueInput: { // input type
     email?: string | null; // String
     id?: number | null; // Int
+    username?: string | null; // String
   }
 }
 
@@ -267,7 +268,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: Context;
+  context: any;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;

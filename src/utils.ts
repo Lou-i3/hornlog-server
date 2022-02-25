@@ -1,18 +1,36 @@
-import { verify } from 'jsonwebtoken'
-import { Context } from './context'
+import { PrismaClient } from '@prisma/client'
+import { verifyIdToken } from './firebase'
 
-export const APP_SECRET = 'appsecret321'
-
-interface Token {
-  userId: string
+export interface Context {
+  prisma: PrismaClient
+  req: any
+  user: Auth
 }
 
-export function getUserId(context: Context) {
-  const authHeader = context.req.get('Authorization')
-  if (authHeader) {
-    const token = authHeader.replace('Bearer ', '')
-    const verifiedToken = verify(token, APP_SECRET) as Token
-    return verifiedToken && Number(verifiedToken.userId)
+export interface Auth {
+  id: string
+  admin: boolean
+  [key: string]: any
+}
+
+export async function getUser(ctx) {
+  const Authorization = (ctx.req || ctx.request).get('Authorization')
+  // console.log('getUser', Authorization);
+
+  if (Authorization) {
+    const token = Authorization.replace('Bearer ', '');
+    // const { id, admin } = (await verifyUserSessionToken(token)) as Auth
+    const user = await verifyIdToken(token); 
+    // console.log('user', user);
+    return { user }
+  }
+  return null
+}
+
+export class AuthError extends Error {
+  constructor(
+    error: { message: string; stack?: any } = { message: 'Not authorized' },
+  ) {
+    super(error.message)
   }
 }
-

@@ -12,12 +12,12 @@ import {
 
 } from 'nexus'
 import { DateTimeResolver } from 'graphql-scalars'
-import { getUserId, APP_SECRET } from '../utils';
+// import { getUserId, APP_SECRET } from '../utils';
 import { compare, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 
 
-import { Context } from '../context';
+import { Context } from '../utils';
 
 
 
@@ -30,15 +30,15 @@ export const Hook = objectType({
         t.nonNull.field('updatedAt', { type: 'DateTime' })
 
         t.nonNull.field('hookType', { type: 'HookType' })
-        t.nonNull.field('owner', { 
+        t.nonNull.field('owner', {
             type: 'User',
             resolve: (parent, _, context) => {
                 return context.prisma.hook
-                  .findUnique({
-                    where: { id: parent.id || undefined },
-                  })
-                  .owner()
-              },
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .owner()
+            },
         })
 
         t.nonNull.field('dateTime', { type: 'DateTime' })
@@ -56,13 +56,13 @@ export const Hook = objectType({
 
 export const HookType = enumType({
     name: "HookType",
-    members: ['Date', 'one_night_stand','self_pleasure', 'sex_friend', 'Friend', 'Sexting'],
+    members: ['Date', 'one_night_stand', 'self_pleasure', 'sex_friend', 'Friend', 'Sexting'],
     description: 'Types of Hook'
 })
 
 export const ProtectionType = enumType({
     name: "ProtectionType",
-    members: ['Protected', 'Unprotected','not_required'],
+    members: ['Protected', 'Unprotected', 'not_required'],
     description: 'Types of protection'
 })
 
@@ -74,11 +74,17 @@ export const HookQuery = extendType({
         // Query for all my hooks
         t.list.field('myHooks', {
             type: 'Hook',
-            resolve: (_parent, _args, context) => {
-                const userId = getUserId(context)
-                console.log(userId)
+            resolve: async (_parent, _args, context) => {
+                const username = context.user.user.user_id;
+                // const email = context.user.email;
+                console.log('contect myHooks', context.user.user);
+                console.log(username)
+                // if (typeof userId !== string) return res.status(404).send('invalid username')
                 return context.prisma.user.findUnique({
-                    where: { id: Number(userId) },
+                    where: {
+                        username: username,
+                        // email: email
+                    },
                 }).hooks()
             },
         })
@@ -107,14 +113,14 @@ export const HookMutation = extendType({
                 ),
             },
             resolve: (_, args, context) => {
-                const userId = getUserId(context)
+                const username = context.user.user.user_id;
 
                 return context.prisma.hook.create({
                     data: {
                         hookType: args.data.hookType,
                         owner: {
-                            connect: { id: userId },
-                          },
+                            connect: { username: username },
+                        },
                         dateTime: args.data.dateTime,
                         duration: args.data.duration,
                         orgasm: args.data.orgasm,
@@ -146,6 +152,7 @@ export const HookCreateInput = inputObjectType({
         t.field('protectionType', { type: 'ProtectionType' })
         t.string('mood')
         t.boolean('addToAppleHealth')
+        t.boolean('protected')
         t.boolean('archived')
     },
 })

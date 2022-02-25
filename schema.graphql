@@ -41,6 +41,7 @@ input HookCreateInput {
   note: String
   orgasm: Boolean
   porn: Boolean
+  protected: Boolean
   protectionType: ProtectionType
 }
 
@@ -110,4 +111,5 @@ input UserCreateInput {
 input UserUniqueInput {
   email: String
   id: Int
+  username: String
 }

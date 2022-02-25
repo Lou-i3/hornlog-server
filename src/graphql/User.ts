@@ -11,12 +11,12 @@ import {
 
 } from 'nexus'
 import { DateTimeResolver } from 'graphql-scalars'
-import { getUserId, APP_SECRET } from '../utils';
+// import { getUserId, APP_SECRET } from '../utils';
 import { compare, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
 
 
-import { Context } from '../context';
+import { Context } from '../utils';
 
 
 // definitions 
@@ -68,11 +68,13 @@ export const UserQuery = objectType({
         // Query for currently logged in user
         t.nullable.field('me', {
             type: 'User',
-            resolve: (_parent, _args, context: Context) => {
-                const userId = getUserId(context)
+            resolve: (_parent, _args, context) => {
+                // const userId = getUserId(context)
+                const username = context.user.user.user_id;
+
                 return context.prisma.user.findUnique({
                     where: {
-                        id: Number(userId),
+                        username: username,
                     },
                 })
             },
@@ -101,7 +103,7 @@ export const UserMutation = objectType({
                     data: {
                         name: args.data.name,
                         email: args.data.email,
-                        password: args.data.password,
+                        // password: args.data.password,
                     },
                 })
             },
@@ -116,7 +118,7 @@ export const UserMutation = objectType({
                 password: stringArg(),
                 username: nonNull(stringArg()),
             },
-            resolve: async (_parent, args, context: Context) => {
+            resolve: async (_parent, args, context) => {
                 const hashedPassword = await hash(String(args.password), 10)
                 const user = await context.prisma.user.create({
                     data: {
@@ -127,7 +129,7 @@ export const UserMutation = objectType({
                     },
                 })
                 return {
-                    token: sign({ userId: user.id }, APP_SECRET),
+                    // token: sign({ userId: user.id }, APP_SECRET),
                     user,
                 }
             },
@@ -139,7 +141,7 @@ export const UserMutation = objectType({
                 email: nonNull(stringArg()),
                 password: nonNull(stringArg()),
             },
-            resolve: async (_parent, { email, password }, context: Context) => {
+            resolve: async (_parent, { email, password }, context) => {
                 const user = await context.prisma.user.findUnique({
                     where: {
                         email,
@@ -153,7 +155,7 @@ export const UserMutation = objectType({
                     throw new Error('Invalid password')
                 }
                 return {
-                    token: sign({ userId: user.id }, APP_SECRET),
+                    // token: sign({ userId: user.id }, APP_SECRET),
                     user,
                 }
             },
@@ -174,6 +176,7 @@ export const UserUniqueInput = inputObjectType({
     name: 'UserUniqueInput',
     definition(t) {
         t.int('id')
+        t.string('username')
         t.string('email')
     },
 })
