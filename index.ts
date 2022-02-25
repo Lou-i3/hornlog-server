@@ -11,8 +11,8 @@ const server = new ApolloServer({
     context: async (req: any) => {
         const user = await getUser(req)
         console.log('index req', req.req.res.req.body );
-        console.log('index headers', req.req.res.req.headers );
-        console.log('user index', user);
+        // console.log('index headers', req.req.res.req.headers );
+        // console.log('user index', user);
         return { ...req, prisma, user }
       },
 });

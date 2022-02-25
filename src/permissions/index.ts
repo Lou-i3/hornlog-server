@@ -6,9 +6,9 @@ import { getUserRecord } from '../firebase'
 
 const rules = {
   isAuthenticatedUser: rule()(async (_parent, _args, context: Context) => {
-    console.log('coucou isAuthenticatedUser');
+    console.log('Checking: isAuthenticatedUser');
 
-    console.log(context.user);
+    console.log('\tFor user: ', context.user.user.email);
 
     return Boolean(context.user)
   }),
