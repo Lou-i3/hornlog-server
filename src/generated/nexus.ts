@@ -31,7 +31,7 @@ export interface NexusGenInputs {
   HookCreateInput: { // input type
     addToAppleHealth?: boolean | null; // Boolean
     archived?: boolean | null; // Boolean
-    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    dateTime?: NexusGenScalars['DateTime'] | null; // DateTime
     duration?: number | null; // Int
     grade?: number | null; // Int
     hookType: NexusGenEnums['HookType']; // HookType!

@@ -75,9 +75,9 @@ export const HookQuery = extendType({
         t.list.field('myHooks', {
             type: 'Hook',
             resolve: async (_parent, _args, context) => {
-                const username = context.user.user.user_id;
+                const username = context.user.user_id;
                 // const email = context.user.email;
-                console.log('contect myHooks', context.user.user);
+                console.log('contect myHooks', context.user);
                 console.log(username)
                 // if (typeof userId !== string) return res.status(404).send('invalid username')
                 return context.prisma.user.findUnique({
@@ -112,8 +112,9 @@ export const HookMutation = extendType({
                     }),
                 ),
             },
-            resolve: (_, args, context) => {
-                const username = context.user.user.user_id;
+            resolve: async (_, args, context) => {
+                console.log("AddHook")
+                const username = context.user.user_id;
 
                 return context.prisma.hook.create({
                     data: {
@@ -143,7 +144,7 @@ export const HookCreateInput = inputObjectType({
     name: 'HookCreateInput',
     definition(t) {
         t.nonNull.field('hookType', { type: 'HookType' })
-        t.nonNull.field('dateTime', { type: 'DateTime' })
+        t.field('dateTime', { type: 'DateTime' })
         t.int('duration')
         t.boolean('orgasm')
         t.boolean('porn')

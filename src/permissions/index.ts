@@ -7,14 +7,27 @@ import { getUserRecord } from '../firebase'
 const rules = {
   isAuthenticatedUser: rule()(async (_parent, _args, context: Context) => {
     console.log('Checking: isAuthenticatedUser');
+    // var user; 
 
-    console.log('\tFor user: ', context.user.user.email);
+    // getUser(context).then(resp => {
+    //     user = resp;
+    //     console.log('user after then', resp);
+    //   });
+    // console.log('user from context', context.req.get('Authorization'));
+
+    // const test = await getUser(context);
+    // console.log(context.user);
+
+    // const user = await getUser(context.req); 
+    // console.log('user from context', user);
+    context.user ? console.log('\tFor user: ', context.user.email) : console.log('\tNo user in context');
 
     return Boolean(context.user)
+    // return false; 
   }),
   isUserAdmin: rule()(async (_parent, _args, context: Context) => {
     // const userId = getUserRecord(context)
-    const username = context.user.user.user_id;
+    const username = context.user.user_id;
     const userInstance = await context.prisma.user.findMany({
       where: {
         username: username,
@@ -28,7 +41,7 @@ const rules = {
   }),
   isUserModerator: rule()(async (_parent, _args, context: Context) => {
     // const userId = getUserRecord(context);
-    const username = context.user.user.user_id;
+    const username = context.user.user_id;
 
     const userInstance = await context.prisma.user.findMany({
       where: {

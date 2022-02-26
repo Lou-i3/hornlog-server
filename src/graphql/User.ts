@@ -70,7 +70,7 @@ export const UserQuery = objectType({
             type: 'User',
             resolve: (_parent, _args, context) => {
                 // const userId = getUserId(context)
-                const username = context.user.user.user_id;
+                const username = context.user.user_id;
 
                 return context.prisma.user.findUnique({
                     where: {

@@ -33,7 +33,7 @@ type Hook {
 input HookCreateInput {
   addToAppleHealth: Boolean
   archived: Boolean
-  dateTime: DateTime!
+  dateTime: DateTime
   duration: Int
   grade: Int
   hookType: HookType!

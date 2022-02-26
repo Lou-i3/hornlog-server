@@ -14,17 +14,43 @@ export interface Auth {
 }
 
 export async function getUser(ctx) {
-  const Authorization = (ctx.req || ctx.request).get('Authorization')
+  let Authorization;
+  if (ctx.req) {
+    Authorization = (ctx.req || ctx.request).get('Authorization')
+  } else if (ctx) {
+    Authorization = ctx
+  }
   // console.log('getUser', Authorization);
+  console.log('getUser origin', ctx.req.headers.origin);
 
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '');
     // const { id, admin } = (await verifyUserSessionToken(token)) as Auth
-    const user = await verifyIdToken(token); 
-    // console.log('user', user);
-    return { user }
+    if (token != "") {
+      console.log("token", token);
+
+      var user;
+      await verifyIdToken(token).then(function (decodedToken) {
+        // console.log("decodedToken", decodedToken);
+        user = decodedToken;
+        // console.log('user found: ', user);
+        // return {user};
+
+      }).catch(function (error) {
+        // console.log("error", error);
+        console.log('error finding user');
+        user = null;
+        return null;
+      });
+
+      // console.log('second time, found: ',user)
+      // .catch(e => {
+      //   console.log("error", e);
+      // });
+      return user
+    }
   }
-  return null
+  // return null
 }
 
 export class AuthError extends Error {
