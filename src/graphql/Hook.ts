@@ -51,6 +51,28 @@ export const Hook = objectType({
         t.string('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
+
+
+        t.field('location', {
+            type: 'Location',
+            resolve: (parent, _, context) => {
+                return context.prisma.hook
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .location()
+            },
+        })
+        t.field('partners', {
+            type: 'HooksOnPartners',
+            resolve: (parent, _, context) => {
+                return context.prisma.hook
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .partners()
+            },
+        })
     },
 })
 

@@ -7,10 +7,35 @@ type AuthPayload {
   user: User
 }
 
+type ContactInfo {
+  designation: String
+  id: ID!
+  info: String
+  owner: User!
+}
+
+"""Types of Contact"""
+enum ContactType {
+  Email
+  Facebook
+  Instagram
+  LinkedIn
+  Phone
+  Snapchat
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+type Gender {
+  createdAt: DateTime!
+  id: ID!
+  label: String!
+  owner: User!
+  updatedAt: DateTime!
+}
 
 type Hook {
   addToAppleHealth: Boolean
@@ -21,10 +46,12 @@ type Hook {
   grade: Int
   hookType: HookType!
   id: ID!
+  location: Location
   mood: String
   note: String
   orgasm: Boolean
   owner: User!
+  partners: HooksOnPartners
   porn: Boolean
   protectionType: ProtectionType
   updatedAt: DateTime!
@@ -55,11 +82,61 @@ enum HookType {
   sex_friend
 }
 
+type HooksOnPartners {
+  assignedAt: DateTime!
+  hook: Hook!
+  id: ID!
+  partner: Partner!
+}
+
+type Location {
+  addToAppleHealth: Boolean
+  archived: Boolean
+  createdAt: DateTime!
+  dateTime: DateTime!
+  duration: Int
+  grade: Int
+  id: ID!
+  mood: String
+  note: String
+  orgasm: Boolean
+  owner: User!
+  person: Person!
+  porn: Boolean
+  protectionType: ProtectionType
+  updatedAt: DateTime!
+}
+
 type Mutation {
   addHook(data: HookCreateInput!): Hook!
   addUser(displayName: String!, email: String!, password: String, username: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload
   signupUser(data: UserCreateInput!): User!
+}
+
+type Partner {
+  hooks: [Hook]
+  id: ID!
+  owner: User!
+  person: Person!
+}
+
+type Person {
+  birthday: DateTime
+  createdAt: DateTime!
+  dateTime: DateTime!
+  firstName: String
+  gender: Gender
+  id: ID!
+  lastName: String
+  locations: Location
+  nationality: String
+  nickName: String
+  owner: User!
+  picture: String
+  sexPosition: SexPosition
+  sexuality: Sexuality
+  updatedAt: DateTime!
 }
 
 """Types of protection"""
@@ -84,18 +161,38 @@ enum Role {
   USER
 }
 
+"""Types of Positions"""
+enum SexPosition {
+  bottom
+  top
+  vers_bottom
+  vers_top
+  versa
+}
+
+"""Types of Sexuality"""
+enum Sexuality {
+  Bi
+  Gay
+  Straight
+}
+
 enum SortOrder {
   asc
   desc
 }
 
 type User {
+  contactInfos: [ContactInfo]
   createdAt: DateTime
   displayName: String
   email: String!
+  genders: [Gender]
   hooks: [Hook]
   id: ID!
   lastLogin: DateTime!
+  locations: [Location]
+  partners: [Partner]
   password: String!
   resetPasswordToken: String!
   role: Role!
@@ -108,8 +205,21 @@ input UserCreateInput {
   name: String
 }
 
+type UserSettings {
+  createdAt: DateTime!
+  id: ID!
+  updatedAt: DateTime!
+  user: User!
+}
+
 input UserUniqueInput {
   email: String
   id: Int
   username: String
+}
+
+"""Dark Mode Choices"""
+enum darkModeChoice {
+  Dark
+  Light
 }

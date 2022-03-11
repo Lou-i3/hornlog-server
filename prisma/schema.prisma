@@ -37,6 +37,11 @@ model User {
   userSettings UserSettings?
   hooks        Hook[]
   person       Person?
+  partners     Partner[]
+
+  locations    Location[]
+  genders      Gender[]
+  contactInfos ContactInfo[]
   @@map("user")
 }
 
@@ -75,12 +80,41 @@ model Person {
   picture     String?    @db.VarChar(255)
   nationality String?    @db.VarChar(255)
   sexuality   Sexuality?
+  partner     Partner?
+  locations   Location[]
+  gender      Gender     @relation(fields: [genderId], references: [id])
+  genderId    Int
+
+  sexPosition SexPosition?
 }
 
 enum Sexuality {
   Gay
   Bi
   Straight
+}
+
+model ContactInfo {
+  id Int @id @default(autoincrement())
+
+  owner   User @relation(fields: [ownerId], references: [id])
+  ownerId Int
+
+  info        String
+  designation String
+
+  type ContactType
+}
+
+enum ContactType {
+  Phone
+  Email
+  Facebook
+  Instagram
+  Twitter
+  Snapchat
+  LinkedIn
+  Other
 }
 
 model Hook {
@@ -100,8 +134,60 @@ model Hook {
   protected        ProtectionType?
   mood             Int?
   addToAppleHealth Boolean?
-  archived          Boolean?
+  archived         Boolean?
 
+  location   Location? @relation(fields: [locationId], references: [id])
+  locationId Int?
+
+  partners HooksOnPartners[]
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  name      String  @db.VarChar(255)
+  latitude  Float?
+  longitude Float?
+  address   String? @db.VarChar(255)
+  city      String? @db.VarChar(255)
+  country   String? @db.VarChar(255)
+  zipCode   String? @db.VarChar(255)
+
+  hooks    Hook[]
+  person   Person? @relation(fields: [personId], references: [id])
+  personId Int?
+
+  owner   User @relation(fields: [ownerId], references: [id])
+  ownerId Int
+
+  type LocationType
+}
+
+enum LocationType {
+  my_place
+  your_place
+  other
+}
+
+model Gender {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  label     String
+
+  owner   User @relation(fields: [ownerId], references: [id])
+  ownerId Int  
+  people Person[]
+}
+
+enum SexPosition {
+  top
+  vers_top
+  versa
+  vers_bottom
+  bottom
 }
 
 enum HookType {
@@ -117,4 +203,27 @@ enum ProtectionType {
   Protected
   Unprotected
   not_required  @map("Not Required")
+}
+
+model Partner {
+  id Int @id
+
+  person   Person @relation(fields: [personId], references: [id])
+  personId Int    @unique // relation scalar field (used in the `@relation` attribute above)
+
+  owner   User @relation(fields: [ownerId], references: [id])
+  ownerId Int
+
+  hooks HooksOnPartners[]
+}
+
+model HooksOnPartners {
+  partner    Partner  @relation(fields: [partnerId], references: [id])
+  partnerId  Int // relation scalar field (used in the `@relation` attribute above)
+  hook       Hook     @relation(fields: [hookId], references: [id])
+  hookId     Int // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([partnerId, hookId])
 }

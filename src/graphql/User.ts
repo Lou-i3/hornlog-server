@@ -43,6 +43,50 @@ export const User = objectType({
                     .hooks()
             },
         })
+
+         t.list.field('partners', {
+            type: 'Partner',
+            resolve: (parent, _, context) => {
+                return context.prisma.user
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .partners()
+            },
+        })
+
+        t.list.field('locations', {
+            type: 'Location',
+            resolve: (parent, _, context) => {
+                return context.prisma.user
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .locations()
+            },
+        })
+
+        t.list.field('genders', {
+            type: 'Gender',
+            resolve: (parent, _, context) => {
+                return context.prisma.user
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .genders()
+            },
+        })
+
+        t.list.field('contactInfos', {
+            type: 'ContactInfo',
+            resolve: (parent, _, context) => {
+                return context.prisma.user
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .contactInfos()
+            },
+        })
     },
 })
 

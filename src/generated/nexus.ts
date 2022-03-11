@@ -54,10 +54,14 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  ContactType: "Email" | "Facebook" | "Instagram" | "LinkedIn" | "Phone" | "Snapchat"
   HookType: "Date" | "Friend" | "Sexting" | "one_night_stand" | "self_pleasure" | "sex_friend"
   ProtectionType: "Protected" | "Unprotected" | "not_required"
   Role: "ADMIN" | "MODERATOR" | "USER"
+  SexPosition: "bottom" | "top" | "vers_bottom" | "vers_top" | "versa"
+  Sexuality: "Bi" | "Gay" | "Straight"
   SortOrder: "asc" | "desc"
+  darkModeChoice: "Dark" | "Light"
 }
 
 export interface NexusGenScalars {
@@ -73,6 +77,17 @@ export interface NexusGenObjects {
   AuthPayload: { // root type
     token?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
+  }
+  ContactInfo: { // root type
+    designation?: string | null; // String
+    id: string; // ID!
+    info?: string | null; // String
+  }
+  Gender: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    label: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Hook: { // root type
     addToAppleHealth?: boolean | null; // Boolean
@@ -90,7 +105,43 @@ export interface NexusGenObjects {
     protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
+  HooksOnPartners: { // root type
+    assignedAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+  }
+  Location: { // root type
+    addToAppleHealth?: boolean | null; // Boolean
+    archived?: boolean | null; // Boolean
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    duration?: number | null; // Int
+    grade?: number | null; // Int
+    id: string; // ID!
+    mood?: string | null; // String
+    note?: string | null; // String
+    orgasm?: boolean | null; // Boolean
+    porn?: boolean | null; // Boolean
+    protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Mutation: {};
+  Partner: { // root type
+    id: string; // ID!
+  }
+  Person: { // root type
+    birthday?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    firstName?: string | null; // String
+    id: string; // ID!
+    lastName?: string | null; // String
+    nationality?: string | null; // String
+    nickName?: string | null; // String
+    picture?: string | null; // String
+    sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
+    sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Query: {};
   User: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -103,6 +154,11 @@ export interface NexusGenObjects {
     role: NexusGenEnums['Role']; // Role!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
+  }
+  UserSettings: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
 
@@ -121,6 +177,19 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
+  ContactInfo: { // field return type
+    designation: string | null; // String
+    id: string; // ID!
+    info: string | null; // String
+    owner: NexusGenRootTypes['User']; // User!
+  }
+  Gender: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    label: string; // String!
+    owner: NexusGenRootTypes['User']; // User!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Hook: { // field return type
     addToAppleHealth: boolean | null; // Boolean
     archived: boolean | null; // Boolean
@@ -130,10 +199,35 @@ export interface NexusGenFieldTypes {
     grade: number | null; // Int
     hookType: NexusGenEnums['HookType']; // HookType!
     id: string; // ID!
+    location: NexusGenRootTypes['Location'] | null; // Location
     mood: string | null; // String
     note: string | null; // String
     orgasm: boolean | null; // Boolean
     owner: NexusGenRootTypes['User']; // User!
+    partners: NexusGenRootTypes['HooksOnPartners'] | null; // HooksOnPartners
+    porn: boolean | null; // Boolean
+    protectionType: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  HooksOnPartners: { // field return type
+    assignedAt: NexusGenScalars['DateTime']; // DateTime!
+    hook: NexusGenRootTypes['Hook']; // Hook!
+    id: string; // ID!
+    partner: NexusGenRootTypes['Partner']; // Partner!
+  }
+  Location: { // field return type
+    addToAppleHealth: boolean | null; // Boolean
+    archived: boolean | null; // Boolean
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    duration: number | null; // Int
+    grade: number | null; // Int
+    id: string; // ID!
+    mood: string | null; // String
+    note: string | null; // String
+    orgasm: boolean | null; // Boolean
+    owner: NexusGenRootTypes['User']; // User!
+    person: NexusGenRootTypes['Person']; // Person!
     porn: boolean | null; // Boolean
     protectionType: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -144,6 +238,29 @@ export interface NexusGenFieldTypes {
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signupUser: NexusGenRootTypes['User']; // User!
   }
+  Partner: { // field return type
+    hooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
+    id: string; // ID!
+    owner: NexusGenRootTypes['User']; // User!
+    person: NexusGenRootTypes['Person']; // Person!
+  }
+  Person: { // field return type
+    birthday: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    dateTime: NexusGenScalars['DateTime']; // DateTime!
+    firstName: string | null; // String
+    gender: NexusGenRootTypes['Gender'] | null; // Gender
+    id: string; // ID!
+    lastName: string | null; // String
+    locations: NexusGenRootTypes['Location'] | null; // Location
+    nationality: string | null; // String
+    nickName: string | null; // String
+    owner: NexusGenRootTypes['User']; // User!
+    picture: string | null; // String
+    sexPosition: NexusGenEnums['SexPosition'] | null; // SexPosition
+    sexuality: NexusGenEnums['Sexuality'] | null; // Sexuality
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Query: { // field return type
     allHooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     allUsers: NexusGenRootTypes['User'][]; // [User!]!
@@ -152,17 +269,27 @@ export interface NexusGenFieldTypes {
     ok: string | null; // String
   }
   User: { // field return type
+    contactInfos: Array<NexusGenRootTypes['ContactInfo'] | null> | null; // [ContactInfo]
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     displayName: string | null; // String
     email: string; // String!
+    genders: Array<NexusGenRootTypes['Gender'] | null> | null; // [Gender]
     hooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     id: string; // ID!
     lastLogin: NexusGenScalars['DateTime']; // DateTime!
+    locations: Array<NexusGenRootTypes['Location'] | null> | null; // [Location]
+    partners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
     password: string; // String!
     resetPasswordToken: string; // String!
     role: NexusGenEnums['Role']; // Role!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
+  }
+  UserSettings: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    user: NexusGenRootTypes['User']; // User!
   }
 }
 
@@ -170,6 +297,19 @@ export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
     token: 'String'
     user: 'User'
+  }
+  ContactInfo: { // field return type name
+    designation: 'String'
+    id: 'ID'
+    info: 'String'
+    owner: 'User'
+  }
+  Gender: { // field return type name
+    createdAt: 'DateTime'
+    id: 'ID'
+    label: 'String'
+    owner: 'User'
+    updatedAt: 'DateTime'
   }
   Hook: { // field return type name
     addToAppleHealth: 'Boolean'
@@ -180,10 +320,35 @@ export interface NexusGenFieldTypeNames {
     grade: 'Int'
     hookType: 'HookType'
     id: 'ID'
+    location: 'Location'
     mood: 'String'
     note: 'String'
     orgasm: 'Boolean'
     owner: 'User'
+    partners: 'HooksOnPartners'
+    porn: 'Boolean'
+    protectionType: 'ProtectionType'
+    updatedAt: 'DateTime'
+  }
+  HooksOnPartners: { // field return type name
+    assignedAt: 'DateTime'
+    hook: 'Hook'
+    id: 'ID'
+    partner: 'Partner'
+  }
+  Location: { // field return type name
+    addToAppleHealth: 'Boolean'
+    archived: 'Boolean'
+    createdAt: 'DateTime'
+    dateTime: 'DateTime'
+    duration: 'Int'
+    grade: 'Int'
+    id: 'ID'
+    mood: 'String'
+    note: 'String'
+    orgasm: 'Boolean'
+    owner: 'User'
+    person: 'Person'
     porn: 'Boolean'
     protectionType: 'ProtectionType'
     updatedAt: 'DateTime'
@@ -194,6 +359,29 @@ export interface NexusGenFieldTypeNames {
     login: 'AuthPayload'
     signupUser: 'User'
   }
+  Partner: { // field return type name
+    hooks: 'Hook'
+    id: 'ID'
+    owner: 'User'
+    person: 'Person'
+  }
+  Person: { // field return type name
+    birthday: 'DateTime'
+    createdAt: 'DateTime'
+    dateTime: 'DateTime'
+    firstName: 'String'
+    gender: 'Gender'
+    id: 'ID'
+    lastName: 'String'
+    locations: 'Location'
+    nationality: 'String'
+    nickName: 'String'
+    owner: 'User'
+    picture: 'String'
+    sexPosition: 'SexPosition'
+    sexuality: 'Sexuality'
+    updatedAt: 'DateTime'
+  }
   Query: { // field return type name
     allHooks: 'Hook'
     allUsers: 'User'
@@ -202,17 +390,27 @@ export interface NexusGenFieldTypeNames {
     ok: 'String'
   }
   User: { // field return type name
+    contactInfos: 'ContactInfo'
     createdAt: 'DateTime'
     displayName: 'String'
     email: 'String'
+    genders: 'Gender'
     hooks: 'Hook'
     id: 'ID'
     lastLogin: 'DateTime'
+    locations: 'Location'
+    partners: 'Partner'
     password: 'String'
     resetPasswordToken: 'String'
     role: 'Role'
     updatedAt: 'DateTime'
     username: 'String'
+  }
+  UserSettings: { // field return type name
+    createdAt: 'DateTime'
+    id: 'ID'
+    updatedAt: 'DateTime'
+    user: 'User'
   }
 }
 
