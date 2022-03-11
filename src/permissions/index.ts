@@ -26,8 +26,11 @@ const rules = {
     // return false; 
   }),
   isUserAdmin: rule()(async (_parent, _args, context: Context) => {
+    console.log('Checking: isUserAdmin');
+
     // const userId = getUserRecord(context)
     const username = context.user.user_id;
+    console.log('username', username);
     const userInstance = await context.prisma.user.findMany({
       where: {
         username: username,
@@ -36,6 +39,8 @@ const rules = {
         },
       },
     })
+
+    console.log("userInstance", userInstance);
 
     return userInstance.length > 0
   }),
@@ -57,17 +62,16 @@ const rules = {
 }
 
 export const permissions = shield({
-
   Query: {
     allUsers: rules.isUserAdmin,
     me: rules.isAuthenticatedUser,
     ok: rules.isAuthenticatedUser,
-    myHooks: rules.isAuthenticatedUser,
+    myHooks: rules.isAuthenticatedUser
   },
   Mutation: {
-    addHook: rules.isAuthenticatedUser,
+    addHook: rules.isAuthenticatedUser
   },
-  Hook: rules.isAuthenticatedUser,
+  Hook: rules.isAuthenticatedUser
 },
   {
     debug: true

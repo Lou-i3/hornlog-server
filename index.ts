@@ -9,6 +9,8 @@ const prisma = new PrismaClient()
 const server = new ApolloServer({
     schema: schema,
     context: async (req: any) => {
+        console.log(' - - - - index req', req.req.res.req.body.operationName, " - - - - -" );
+
         var user;
         await getUser(req).then(resp => {
             user = resp;
@@ -17,9 +19,8 @@ const server = new ApolloServer({
             
 
         })
-        console.log('index req', req.req.res.req.body.operationName );
         // console.log('index headers', req.req.res.req.headers );
-        // console.log('user index', user);
+        console.log('user index', user);
         return { ...req, prisma, user }
       },
 });
