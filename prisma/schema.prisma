@@ -84,6 +84,7 @@ model Person {
   locations   Location[]
   gender      Gender     @relation(fields: [genderId], references: [id])
   genderId    Int
+  notes       String?   @db.VarChar(255)
 
   sexPosition SexPosition?
 }
@@ -206,7 +207,7 @@ enum ProtectionType {
 }
 
 model Partner {
-  id Int @id
+  id Int @id @default(autoincrement())
 
   person   Person @relation(fields: [personId], references: [id])
   personId Int    @unique // relation scalar field (used in the `@relation` attribute above)

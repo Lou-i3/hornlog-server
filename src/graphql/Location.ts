@@ -51,15 +51,6 @@ export const Location = objectType({
             },
         })
 
-        t.nonNull.field('dateTime', { type: 'DateTime' })
-        t.int('duration')
-        t.boolean('orgasm')
-        t.boolean('porn')
-        t.string('note')
-        t.int('grade')
-        t.field('protectionType', { type: 'ProtectionType' })
-        t.string('mood')
-        t.boolean('addToAppleHealth')
-        t.boolean('archived')
+        
     },
 })

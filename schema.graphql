@@ -82,6 +82,21 @@ enum HookType {
   sex_friend
 }
 
+input HookUpdateInput {
+  addToAppleHealth: Boolean
+  archived: Boolean
+  dateTime: DateTime
+  duration: Int
+  grade: Int
+  hookType: HookType
+  mood: String
+  note: String
+  orgasm: Boolean
+  porn: Boolean
+  protected: Boolean
+  protectionType: ProtectionType
+}
+
 type HooksOnPartners {
   assignedAt: DateTime!
   hook: Hook!
@@ -90,26 +105,17 @@ type HooksOnPartners {
 }
 
 type Location {
-  addToAppleHealth: Boolean
-  archived: Boolean
   createdAt: DateTime!
-  dateTime: DateTime!
-  duration: Int
-  grade: Int
   id: ID!
-  mood: String
-  note: String
-  orgasm: Boolean
   owner: User!
   person: Person!
-  porn: Boolean
-  protectionType: ProtectionType
   updatedAt: DateTime!
 }
 
 type Mutation {
   addHook(data: HookCreateInput!): Hook!
   addUser(displayName: String!, email: String!, password: String, username: String!): AuthPayload!
+  editHook(data: HookUpdateInput!): Hook!
   login(email: String!, password: String!): AuthPayload
   signupUser(data: UserCreateInput!): User!
 }
@@ -151,6 +157,7 @@ type Query {
   allUsers: [User!]!
   me: User
   myHooks: [Hook]
+  myPartners: [Partner]
   ok: String
 }
 

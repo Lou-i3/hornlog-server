@@ -66,7 +66,8 @@ export const permissions = shield({
     allUsers: rules.isUserAdmin,
     me: rules.isAuthenticatedUser,
     ok: rules.isAuthenticatedUser,
-    myHooks: rules.isAuthenticatedUser
+    myHooks: rules.isAuthenticatedUser,
+    myPartners: rules.isAuthenticatedUser
   },
   Mutation: {
     addHook: rules.isAuthenticatedUser

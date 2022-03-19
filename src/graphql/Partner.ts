@@ -18,6 +18,7 @@ import { sign } from 'jsonwebtoken'
 
 
 import { Context } from '../utils';
+import { HooksOnPartners } from './HooksOnPartners';
 
 
 // definitions 
@@ -39,12 +40,14 @@ export const Partner = objectType({
 
         t.list.field('hooks', {
             type: 'Hook',
-            resolve: (parent, _, context) => {
-                return context.prisma.partner
-                    .findUnique({
-                        where: { id: parent.id || undefined },
-                    })
-                    .hooks()
+            resolve: async (parent, _, context) => {
+                const hooksOnPartners = await context.prisma.hooksOnPartners.findMany({
+                    where: { partnerId: parent.id },
+                    include: { hook: true }
+                  })
+                const hooks = hooksOnPartners.map(hooksOnPartner => hooksOnPartner.hook)
+                // console.log("hooks of myhooks", hooksOnPartners)
+                return hooks
             },
         })
 
@@ -58,5 +61,30 @@ export const Partner = objectType({
                     .owner()
             },
         })
+    },
+})
+
+// queries
+export const PartnerQuery = extendType({
+    type: 'Query',
+    definition(t) {
+        // Query for all my partners
+        t.list.field('myPartners', {
+            type: 'Partner',
+            resolve: async (_parent, _args, context) => {
+                const username = context.user.user_id;
+                // const email = context.user.email;
+                console.log('contect myPartners', context.user);
+                console.log(username)
+                // if (typeof userId !== string) return res.status(404).send('invalid username')
+                return context.prisma.user.findUnique({
+                    where: {
+                        username: username,
+                        // email: email
+                    },
+                }).partners()
+            },
+        })
+
     },
 })

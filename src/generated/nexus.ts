@@ -42,6 +42,20 @@ export interface NexusGenInputs {
     protected?: boolean | null; // Boolean
     protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
   }
+  HookUpdateInput: { // input type
+    addToAppleHealth?: boolean | null; // Boolean
+    archived?: boolean | null; // Boolean
+    dateTime?: NexusGenScalars['DateTime'] | null; // DateTime
+    duration?: number | null; // Int
+    grade?: number | null; // Int
+    hookType?: NexusGenEnums['HookType'] | null; // HookType
+    mood?: string | null; // String
+    note?: string | null; // String
+    orgasm?: boolean | null; // Boolean
+    porn?: boolean | null; // Boolean
+    protected?: boolean | null; // Boolean
+    protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+  }
   UserCreateInput: { // input type
     email: string; // String!
     name?: string | null; // String
@@ -110,18 +124,8 @@ export interface NexusGenObjects {
     id: string; // ID!
   }
   Location: { // root type
-    addToAppleHealth?: boolean | null; // Boolean
-    archived?: boolean | null; // Boolean
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    dateTime: NexusGenScalars['DateTime']; // DateTime!
-    duration?: number | null; // Int
-    grade?: number | null; // Int
     id: string; // ID!
-    mood?: string | null; // String
-    note?: string | null; // String
-    orgasm?: boolean | null; // Boolean
-    porn?: boolean | null; // Boolean
-    protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Mutation: {};
@@ -216,25 +220,16 @@ export interface NexusGenFieldTypes {
     partner: NexusGenRootTypes['Partner']; // Partner!
   }
   Location: { // field return type
-    addToAppleHealth: boolean | null; // Boolean
-    archived: boolean | null; // Boolean
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    dateTime: NexusGenScalars['DateTime']; // DateTime!
-    duration: number | null; // Int
-    grade: number | null; // Int
     id: string; // ID!
-    mood: string | null; // String
-    note: string | null; // String
-    orgasm: boolean | null; // Boolean
     owner: NexusGenRootTypes['User']; // User!
     person: NexusGenRootTypes['Person']; // Person!
-    porn: boolean | null; // Boolean
-    protectionType: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Mutation: { // field return type
     addHook: NexusGenRootTypes['Hook']; // Hook!
     addUser: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    editHook: NexusGenRootTypes['Hook']; // Hook!
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signupUser: NexusGenRootTypes['User']; // User!
   }
@@ -266,6 +261,7 @@ export interface NexusGenFieldTypes {
     allUsers: NexusGenRootTypes['User'][]; // [User!]!
     me: NexusGenRootTypes['User'] | null; // User
     myHooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
+    myPartners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
     ok: string | null; // String
   }
   User: { // field return type
@@ -337,25 +333,16 @@ export interface NexusGenFieldTypeNames {
     partner: 'Partner'
   }
   Location: { // field return type name
-    addToAppleHealth: 'Boolean'
-    archived: 'Boolean'
     createdAt: 'DateTime'
-    dateTime: 'DateTime'
-    duration: 'Int'
-    grade: 'Int'
     id: 'ID'
-    mood: 'String'
-    note: 'String'
-    orgasm: 'Boolean'
     owner: 'User'
     person: 'Person'
-    porn: 'Boolean'
-    protectionType: 'ProtectionType'
     updatedAt: 'DateTime'
   }
   Mutation: { // field return type name
     addHook: 'Hook'
     addUser: 'AuthPayload'
+    editHook: 'Hook'
     login: 'AuthPayload'
     signupUser: 'User'
   }
@@ -387,6 +374,7 @@ export interface NexusGenFieldTypeNames {
     allUsers: 'User'
     me: 'User'
     myHooks: 'Hook'
+    myPartners: 'Partner'
     ok: 'String'
   }
   User: { // field return type name
@@ -424,6 +412,9 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password?: string | null; // String
       username: string; // String!
+    }
+    editHook: { // args
+      data: NexusGenInputs['HookUpdateInput']; // HookUpdateInput!
     }
     login: { // args
       email: string; // String!

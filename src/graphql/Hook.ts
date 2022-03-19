@@ -159,6 +159,40 @@ export const HookMutation = extendType({
             },
         })
 
+        t.nonNull.field('editHook', {
+            type: 'Hook',
+            args: {
+                data: nonNull(
+                    arg({
+                        type: 'HookUpdateInput',
+                    }),
+                ),
+            },
+            resolve: async (_, args, context) => {
+                console.log("AddHook")
+                const username = context.user.user_id;
+
+                return context.prisma.hook.update({
+                    data: {
+                        hookType: args.data.hookType,
+                        owner: {
+                            connect: { username: username },
+                        },
+                        dateTime: args.data.dateTime,
+                        duration: args.data.duration,
+                        orgasm: args.data.orgasm,
+                        porn: args.data.porn,
+                        note: args.data.note,
+                        grade: args.data.grade,
+                        protected: args.data.protected,
+                        mood: args.data.mood,
+                        addToAppleHealth: args.data.addToAppleHealth,
+                        archived: args.data.archived,
+                    },
+                })
+            },
+        })
+
     },
 })
 
@@ -166,6 +200,24 @@ export const HookCreateInput = inputObjectType({
     name: 'HookCreateInput',
     definition(t) {
         t.nonNull.field('hookType', { type: 'HookType' })
+        t.field('dateTime', { type: 'DateTime' })
+        t.int('duration')
+        t.boolean('orgasm')
+        t.boolean('porn')
+        t.string('note')
+        t.int('grade')
+        t.field('protectionType', { type: 'ProtectionType' })
+        t.string('mood')
+        t.boolean('addToAppleHealth')
+        t.boolean('protected')
+        t.boolean('archived')
+    },
+})
+
+export const HookUpdateInput = inputObjectType({
+    name: 'HookUpdateInput',
+    definition(t) {
+        t.field('hookType', { type: 'HookType' })
         t.field('dateTime', { type: 'DateTime' })
         t.int('duration')
         t.boolean('orgasm')
