@@ -33,8 +33,12 @@ type Gender {
   createdAt: DateTime!
   id: ID!
   label: String!
-  owner: User!
+  owner: User
   updatedAt: DateTime!
+}
+
+input GenderInput {
+  label: String!
 }
 
 type Hook {
@@ -113,8 +117,12 @@ type Location {
 }
 
 type Mutation {
+  addAppGender(data: GenderInput!): Gender!
   addHook(data: HookCreateInput!): Hook!
   addUser(displayName: String!, email: String!, password: String, username: String!): AuthPayload!
+  addUserGender(data: GenderInput!): Gender!
+  deleteGender(id: Int!): Gender!
+  editGender(data: GenderInput!, id: Int!): Gender!
   editHook(data: HookUpdateInput!): Hook!
   login(email: String!, password: String!): AuthPayload
   signupUser(data: UserCreateInput!): User!
@@ -153,9 +161,12 @@ enum ProtectionType {
 }
 
 type Query {
+  accessibleGenders: [Gender]
   allHooks: [Hook]
   allUsers: [User!]!
+  appGenders: [Gender]
   me: User
+  myGenders: [Gender]
   myHooks: [Hook]
   myPartners: [Partner]
   ok: String
@@ -197,7 +208,7 @@ type User {
   genders: [Gender]
   hooks: [Hook]
   id: ID!
-  lastLogin: DateTime!
+  lastLoginAt: DateTime!
   locations: [Location]
   partners: [Partner]
   password: String!

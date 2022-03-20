@@ -32,7 +32,7 @@ export const User = objectType({
         t.nonNull.string('resetPasswordToken')
         t.field('createdAt', { type: 'DateTime' })
         t.nonNull.field('updatedAt', { type: 'DateTime' })
-        t.nonNull.field('lastLogin', { type: 'DateTime' })
+        t.nonNull.field('lastLoginAt', { type: 'DateTime' })
         t.list.field('hooks', {
             type: 'Hook',
             resolve: (parent, _, context) => {
@@ -44,7 +44,7 @@ export const User = objectType({
             },
         })
 
-         t.list.field('partners', {
+        t.list.field('partners', {
             type: 'Partner',
             resolve: (parent, _, context) => {
                 return context.prisma.user

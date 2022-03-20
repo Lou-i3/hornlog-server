@@ -178,8 +178,8 @@ model Gender {
   updatedAt DateTime @default(now()) @updatedAt
   label     String
 
-  owner   User @relation(fields: [ownerId], references: [id])
-  ownerId Int  
+  owner   User? @relation(fields: [ownerId], references: [id])
+  ownerId Int?  
   people Person[]
 }
 
@@ -222,7 +222,7 @@ model HooksOnPartners {
   partner    Partner  @relation(fields: [partnerId], references: [id])
   partnerId  Int // relation scalar field (used in the `@relation` attribute above)
   hook       Hook     @relation(fields: [hookId], references: [id])
-  hookId     Int // relation scalar field (used in the `@relation` attribute above)
+  hookId     Int // relation scalar field (used in the `@relation` attribute above) 
   assignedAt DateTime @default(now())
   assignedBy String
 
