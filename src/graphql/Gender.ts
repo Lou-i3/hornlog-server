@@ -39,9 +39,19 @@ export const Gender = objectType({
                     .owner()
             },
         })
-        
+
+        t.field('hasPeople', {
+            type: 'Boolean',
+            resolve: async (parent, _, context) => {
+                const people = await context.prisma.person
+                    .findMany({
+                        where: { gender: parent },
+                    });
+                return !(people.length === 0) 
+            }
+        })
         t.nonNull.string('label')
-        
+
     },
 })
 
@@ -165,8 +175,8 @@ export const GenderMutation = extendType({
                 return context.prisma.gender.update({
                     where: {
                         id: args.id,
-                      },
-                      data: {
+                    },
+                    data: {
                         label: args.data.label,
                     },
                 })
@@ -185,7 +195,7 @@ export const GenderMutation = extendType({
                 return context.prisma.gender.delete({
                     where: {
                         id: args.id,
-                      },
+                    },
                 })
             },
         })

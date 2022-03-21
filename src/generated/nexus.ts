@@ -59,6 +59,18 @@ export interface NexusGenInputs {
     protected?: boolean | null; // Boolean
     protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
   }
+  PartnerCreateInput: { // input type
+    firstName?: string | null; // String
+    genderId: number; // Int!
+    lastName?: string | null; // String
+    nickName?: string | null; // String
+  }
+  PartnerUpdateInput: { // input type
+    firstName?: string | null; // String
+    genderId: number; // Int!
+    id: number; // Int!
+    lastName?: string | null; // String
+  }
   UserCreateInput: { // input type
     email: string; // String!
     name?: string | null; // String
@@ -192,6 +204,7 @@ export interface NexusGenFieldTypes {
   }
   Gender: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
+    hasPeople: boolean | null; // Boolean
     id: string; // ID!
     label: string; // String!
     owner: NexusGenRootTypes['User'] | null; // User
@@ -232,11 +245,13 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     addAppGender: NexusGenRootTypes['Gender']; // Gender!
     addHook: NexusGenRootTypes['Hook']; // Hook!
+    addPartner: NexusGenRootTypes['Partner']; // Partner!
     addUser: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     addUserGender: NexusGenRootTypes['Gender']; // Gender!
     deleteGender: NexusGenRootTypes['Gender']; // Gender!
     editGender: NexusGenRootTypes['Gender']; // Gender!
     editHook: NexusGenRootTypes['Hook']; // Hook!
+    editPartner: NexusGenRootTypes['Partner']; // Partner!
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signupUser: NexusGenRootTypes['User']; // User!
   }
@@ -312,6 +327,7 @@ export interface NexusGenFieldTypeNames {
   }
   Gender: { // field return type name
     createdAt: 'DateTime'
+    hasPeople: 'Boolean'
     id: 'ID'
     label: 'String'
     owner: 'User'
@@ -352,11 +368,13 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     addAppGender: 'Gender'
     addHook: 'Hook'
+    addPartner: 'Partner'
     addUser: 'AuthPayload'
     addUserGender: 'Gender'
     deleteGender: 'Gender'
     editGender: 'Gender'
     editHook: 'Hook'
+    editPartner: 'Partner'
     login: 'AuthPayload'
     signupUser: 'User'
   }
@@ -427,6 +445,9 @@ export interface NexusGenArgTypes {
     addHook: { // args
       data: NexusGenInputs['HookCreateInput']; // HookCreateInput!
     }
+    addPartner: { // args
+      data: NexusGenInputs['PartnerCreateInput']; // PartnerCreateInput!
+    }
     addUser: { // args
       displayName: string; // String!
       email: string; // String!
@@ -445,6 +466,9 @@ export interface NexusGenArgTypes {
     }
     editHook: { // args
       data: NexusGenInputs['HookUpdateInput']; // HookUpdateInput!
+    }
+    editPartner: { // args
+      data: NexusGenInputs['PartnerUpdateInput']; // PartnerUpdateInput!
     }
     login: { // args
       email: string; // String!

@@ -31,6 +31,7 @@ scalar DateTime
 
 type Gender {
   createdAt: DateTime!
+  hasPeople: Boolean
   id: ID!
   label: String!
   owner: User
@@ -119,11 +120,13 @@ type Location {
 type Mutation {
   addAppGender(data: GenderInput!): Gender!
   addHook(data: HookCreateInput!): Hook!
+  addPartner(data: PartnerCreateInput!): Partner!
   addUser(displayName: String!, email: String!, password: String, username: String!): AuthPayload!
   addUserGender(data: GenderInput!): Gender!
   deleteGender(id: Int!): Gender!
   editGender(data: GenderInput!, id: Int!): Gender!
   editHook(data: HookUpdateInput!): Hook!
+  editPartner(data: PartnerUpdateInput!): Partner!
   login(email: String!, password: String!): AuthPayload
   signupUser(data: UserCreateInput!): User!
 }
@@ -133,6 +136,20 @@ type Partner {
   id: ID!
   owner: User!
   person: Person!
+}
+
+input PartnerCreateInput {
+  firstName: String
+  genderId: Int!
+  lastName: String
+  nickName: String
+}
+
+input PartnerUpdateInput {
+  firstName: String
+  genderId: Int!
+  id: Int!
+  lastName: String
 }
 
 type Person {
