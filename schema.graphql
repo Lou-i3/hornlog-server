@@ -197,6 +197,8 @@ type Query {
   myHooks: [Hook]
   myPartners: [Partner]
   ok: String
+  sexPositions: [SexPosition]
+  sexualities: [Sexuality]
 }
 
 """Defines authorizations"""

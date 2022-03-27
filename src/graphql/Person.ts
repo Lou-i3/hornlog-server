@@ -86,3 +86,34 @@ export const SexPosition = enumType({
     members: ['top', 'vers_top', 'versa', 'vers_bottom', 'bottom'],
     description: 'Types of Positions'
 })
+
+// queries 
+export const PersonQueries = extendType({
+    type: 'Query',
+    definition(t) {
+        
+        t.list.field('sexualities', {
+            type: 'Sexuality',
+            resolve (_parent, _args, context)  {
+
+                const sexualities = Sexuality.value.members;
+                console.log(sexualities);
+                // console.log(context.db);
+                return sexualities
+            },
+        })
+
+        t.list.field('sexPositions', {
+            type: 'SexPosition',
+            resolve (_parent, _args, context)  {
+
+                const sexPositions = SexPosition.value.members;
+                console.log(sexPositions);
+                // console.log(context.db);
+                return sexPositions
+            },
+        })
+
+        
+    },
+})

@@ -299,6 +299,8 @@ export interface NexusGenFieldTypes {
     myHooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     myPartners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
     ok: string | null; // String
+    sexPositions: Array<NexusGenEnums['SexPosition'] | null> | null; // [SexPosition]
+    sexualities: Array<NexusGenEnums['Sexuality'] | null> | null; // [Sexuality]
   }
   User: { // field return type
     contactInfos: Array<NexusGenRootTypes['ContactInfo'] | null> | null; // [ContactInfo]
@@ -423,6 +425,8 @@ export interface NexusGenFieldTypeNames {
     myHooks: 'Hook'
     myPartners: 'Partner'
     ok: 'String'
+    sexPositions: 'SexPosition'
+    sexualities: 'Sexuality'
   }
   User: { // field return type name
     contactInfos: 'ContactInfo'
