@@ -139,30 +139,40 @@ type Partner {
 }
 
 input PartnerCreateInput {
+  birthday: DateTime
   firstName: String
   genderId: Int!
+  how: String
   lastName: String
+  nationality: String
   nickName: String
+  notes: String
 }
 
 input PartnerUpdateInput {
+  birthday: DateTime
   firstName: String
-  genderId: Int!
+  genderId: Int
+  how: String
   id: Int!
   lastName: String
+  nationality: String
+  nickName: String
+  notes: String
 }
 
 type Person {
   birthday: DateTime
   createdAt: DateTime!
-  dateTime: DateTime!
   firstName: String
   gender: Gender
+  how: String
   id: ID!
   lastName: String
   locations: Location
   nationality: String
   nickName: String
+  notes: String
   owner: User!
   picture: String
   sexPosition: SexPosition

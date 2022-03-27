@@ -79,7 +79,7 @@ export const GenderQueries = extendType({
 
         t.list.field('appGenders', {
             type: 'Gender',
-            resolve: (_parent, _args, context) => {
+            resolve: async (_parent, _args, context) => {
                 return context.prisma.gender.findMany({
                     where: {
                         ownerId: null
@@ -90,20 +90,22 @@ export const GenderQueries = extendType({
 
         t.list.field('accessibleGenders', {
             type: 'Gender',
-            resolve: (_parent, _args, context) => {
+            resolve: async (_parent, _args, context) => {
                 const username = context.user.user_id;
-                var genders = context.prisma.gender.findMany({
+                var genders = await context.prisma.gender.findMany({
                     where: {
                         ownerId: undefined
                     }
                 })
-                genders += context.prisma.user.findUnique({
+                // console.log("sent genders first set : ", genders)
+
+                genders.concat(await context.prisma.user.findUnique({
                     where: {
                         username: username,
                         // email: email
                     },
-                }).genders()
-
+                }).genders())
+                console.log("sent genders: ", genders)
                 return genders
             },
         })

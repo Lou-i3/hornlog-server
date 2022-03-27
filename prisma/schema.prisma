@@ -71,9 +71,10 @@ model Person {
   id          Int        @id @default(autoincrement())
   user        User?      @relation(fields: [userId], references: [id])
   userId      Int?       @unique // relation scalar field (used in the `@relation` attribute above)
-  firstName   String     @db.VarChar(255)
-  lastName    String     @db.VarChar(255)
+  firstName   String?     @db.VarChar(255)
+  lastName    String?     @db.VarChar(255)
   nickName    String?    @db.VarChar(255)
+  how         String?    @db.VarChar(255)
   birthday    DateTime?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now()) @updatedAt
@@ -82,8 +83,8 @@ model Person {
   sexuality   Sexuality?
   partner     Partner?
   locations   Location[]
-  gender      Gender     @relation(fields: [genderId], references: [id])
-  genderId    Int
+  gender      Gender?     @relation(fields: [genderId], references: [id])
+  genderId    Int?
   notes       String?   @db.VarChar(255)
 
   sexPosition SexPosition?

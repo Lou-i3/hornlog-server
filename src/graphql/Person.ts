@@ -40,10 +40,12 @@ export const Person = objectType({
             },
         })
 
-        t.nonNull.field('dateTime', { type: 'DateTime' })
+        // t.nonNull.field('dateTime', { type: 'DateTime' })
         t.string('firstName')
         t.string('lastName')
         t.string('nickName')
+        t.string('how')
+        t.string('notes')
         t.string('picture')
         t.field('gender', { 
             type: 'Gender',

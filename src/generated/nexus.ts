@@ -60,16 +60,25 @@ export interface NexusGenInputs {
     protectionType?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
   }
   PartnerCreateInput: { // input type
+    birthday?: NexusGenScalars['DateTime'] | null; // DateTime
     firstName?: string | null; // String
     genderId: number; // Int!
+    how?: string | null; // String
     lastName?: string | null; // String
+    nationality?: string | null; // String
     nickName?: string | null; // String
+    notes?: string | null; // String
   }
   PartnerUpdateInput: { // input type
+    birthday?: NexusGenScalars['DateTime'] | null; // DateTime
     firstName?: string | null; // String
-    genderId: number; // Int!
+    genderId?: number | null; // Int
+    how?: string | null; // String
     id: number; // Int!
     lastName?: string | null; // String
+    nationality?: string | null; // String
+    nickName?: string | null; // String
+    notes?: string | null; // String
   }
   UserCreateInput: { // input type
     email: string; // String!
@@ -150,12 +159,13 @@ export interface NexusGenObjects {
   Person: { // root type
     birthday?: NexusGenScalars['DateTime'] | null; // DateTime
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    dateTime: NexusGenScalars['DateTime']; // DateTime!
     firstName?: string | null; // String
+    how?: string | null; // String
     id: string; // ID!
     lastName?: string | null; // String
     nationality?: string | null; // String
     nickName?: string | null; // String
+    notes?: string | null; // String
     picture?: string | null; // String
     sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
     sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
@@ -264,14 +274,15 @@ export interface NexusGenFieldTypes {
   Person: { // field return type
     birthday: NexusGenScalars['DateTime'] | null; // DateTime
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    dateTime: NexusGenScalars['DateTime']; // DateTime!
     firstName: string | null; // String
     gender: NexusGenRootTypes['Gender'] | null; // Gender
+    how: string | null; // String
     id: string; // ID!
     lastName: string | null; // String
     locations: NexusGenRootTypes['Location'] | null; // Location
     nationality: string | null; // String
     nickName: string | null; // String
+    notes: string | null; // String
     owner: NexusGenRootTypes['User']; // User!
     picture: string | null; // String
     sexPosition: NexusGenEnums['SexPosition'] | null; // SexPosition
@@ -387,14 +398,15 @@ export interface NexusGenFieldTypeNames {
   Person: { // field return type name
     birthday: 'DateTime'
     createdAt: 'DateTime'
-    dateTime: 'DateTime'
     firstName: 'String'
     gender: 'Gender'
+    how: 'String'
     id: 'ID'
     lastName: 'String'
     locations: 'Location'
     nationality: 'String'
     nickName: 'String'
+    notes: 'String'
     owner: 'User'
     picture: 'String'
     sexPosition: 'SexPosition'

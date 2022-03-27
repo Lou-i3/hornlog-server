@@ -112,6 +112,10 @@ export const PartnerMutation = extendType({
                         firstName: args.data.firstName,
                         lastName: args.data.lastName,
                         nickName: args.data.nickName,
+                        nationality: args.data.nationality,
+                        birthday: args.data.birthday,
+                        how: args.data.how,
+                        notes: args.data.notes,
                         gender: {
                             connect: {
                                 id: args.data.genderId
@@ -151,15 +155,31 @@ export const PartnerMutation = extendType({
                     where: {
                         id: args.data.id,
                     },
+                    include: { 
+                        owner: true,
+                        person: true,
+                    }
                 });
+                if (!partner) throw new Error('Partner not found')
+                if (partner.owner.username !== username) throw new Error('Not authorized')
 
                 return context.prisma.person.update({
                     where: {
-                        partner: partner,
+                        id: partner.person.id,
                     },
                     data: {
                         firstName: args.data.firstName,
                         lastName: args.data.lastName,
+                        nickName: args.data.nickName,
+                        nationality: args.data.nationality,
+                        birthday: args.data.birthday,
+                        how: args.data.how,
+                        notes: args.data.notes,
+                        gender: {
+                            connect: {
+                                id: args.data.genderId
+                            }
+                        }
                     },
                 })
             },
@@ -174,6 +194,10 @@ export const PartnerCreateInput = inputObjectType({
         t.string('firstName')
         t.string('lastName')
         t.string('nickName')
+        t.string('nationality')
+        t.string('how')
+        t.string('notes')
+        t.field("birthday", {type: "DateTime"})
 
         t.nonNull.int('genderId')
     },
@@ -186,8 +210,15 @@ export const PartnerUpdateInput = inputObjectType({
 
         t.string('firstName')
         t.string('lastName')
+        t.string('nickName')
+        t.string('nationality')
+        t.string('how')
+        t.string('notes')
+        t.field("birthday", {type: "DateTime"})
 
-        t.nonNull.int('genderId')
+
+
+        t.int('genderId')
 
     },
 })
