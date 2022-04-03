@@ -41,7 +41,7 @@ model User {
 
   locations    Location[]
   genders      Gender[]
-  contactInfos ContactInfo[]
+  
   @@map("user")
 }
 
@@ -88,6 +88,7 @@ model Person {
   notes       String?   @db.VarChar(255)
 
   sexPosition SexPosition?
+  contactInfos ContactInfo[]
 }
 
 enum Sexuality {
@@ -99,8 +100,8 @@ enum Sexuality {
 model ContactInfo {
   id Int @id @default(autoincrement())
 
-  owner   User @relation(fields: [ownerId], references: [id])
-  ownerId Int
+  person   Person @relation(fields: [personId], references: [id])
+  personId Int
 
   info        String
   designation String
@@ -111,12 +112,7 @@ model ContactInfo {
 enum ContactType {
   Phone
   Email
-  Facebook
-  Instagram
-  Twitter
-  Snapchat
-  LinkedIn
-  Other
+  social_media
 }
 
 model Hook {

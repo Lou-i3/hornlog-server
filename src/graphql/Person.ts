@@ -71,6 +71,17 @@ export const Person = objectType({
         t.string('nationality')
         t.field('sexuality', { type: 'Sexuality' })
         t.field('sexPosition', { type: 'SexPosition' })
+
+        t.list.field('contactInfos', {
+            type: 'ContactInfo',
+            resolve: (parent, _, context) => {
+                return context.prisma.person
+                    .findUnique({
+                        where: { id: parent.id || undefined },
+                    })
+                    .contactInfos()
+            },
+        })
         
     },
 })
@@ -91,28 +102,6 @@ export const SexPosition = enumType({
 export const PersonQueries = extendType({
     type: 'Query',
     definition(t) {
-        
-        t.list.field('sexualities', {
-            type: 'Sexuality',
-            resolve (_parent, _args, context)  {
-
-                const sexualities = Sexuality.value.members;
-                console.log(sexualities);
-                // console.log(context.db);
-                return sexualities
-            },
-        })
-
-        t.list.field('sexPositions', {
-            type: 'SexPosition',
-            resolve (_parent, _args, context)  {
-
-                const sexPositions = SexPosition.value.members;
-                console.log(sexPositions);
-                // console.log(context.db);
-                return sexPositions
-            },
-        })
 
         
     },

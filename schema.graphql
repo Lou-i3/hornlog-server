@@ -8,20 +8,18 @@ type AuthPayload {
 }
 
 type ContactInfo {
+  contactType: ContactType!
   designation: String
   id: ID!
   info: String
-  owner: User!
+  person: Person!
 }
 
 """Types of Contact"""
 enum ContactType {
   Email
-  Facebook
-  Instagram
-  LinkedIn
   Phone
-  Snapchat
+  social_media
 }
 
 """
@@ -147,6 +145,8 @@ input PartnerCreateInput {
   nationality: String
   nickName: String
   notes: String
+  sexPosition: SexPosition
+  sexuality: Sexuality
 }
 
 input PartnerUpdateInput {
@@ -159,10 +159,13 @@ input PartnerUpdateInput {
   nationality: String
   nickName: String
   notes: String
+  sexPosition: SexPosition
+  sexuality: Sexuality
 }
 
 type Person {
   birthday: DateTime
+  contactInfos: [ContactInfo]
   createdAt: DateTime!
   firstName: String
   gender: Gender
@@ -197,8 +200,6 @@ type Query {
   myHooks: [Hook]
   myPartners: [Partner]
   ok: String
-  sexPositions: [SexPosition]
-  sexualities: [Sexuality]
 }
 
 """Defines authorizations"""
@@ -230,7 +231,6 @@ enum SortOrder {
 }
 
 type User {
-  contactInfos: [ContactInfo]
   createdAt: DateTime
   displayName: String
   email: String!

@@ -77,16 +77,16 @@ export const User = objectType({
             },
         })
 
-        t.list.field('contactInfos', {
-            type: 'ContactInfo',
-            resolve: (parent, _, context) => {
-                return context.prisma.user
-                    .findUnique({
-                        where: { id: parent.id || undefined },
-                    })
-                    .contactInfos()
-            },
-        })
+        // t.list.field('contactInfos', {
+        //     type: 'ContactInfo',
+        //     resolve: (parent, _, context) => {
+        //         return context.prisma.user
+        //             .findUnique({
+        //                 where: { id: parent.id || undefined },
+        //             })
+        //             .contactInfos()
+        //     },
+        // })
     },
 })
 

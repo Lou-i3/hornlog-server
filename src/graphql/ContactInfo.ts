@@ -26,26 +26,26 @@ export const ContactInfo = objectType({
     definition(t) {
         t.nonNull.id('id')
         
-        t.nonNull.field('owner', {
-            type: 'User',
+        t.nonNull.field('person', {
+            type: 'Person',
             resolve: (parent, _, context) => {
                 return context.prisma.hook
                     .findUnique({
                         where: { id: parent.id || undefined },
                     })
-                    .owner()
+                    .person()
             },
         })
 
         t.string('info')
         t.string('designation')
 
-        // t.nonNull.field('contactType', {type: 'ContactType'})
+        t.nonNull.field('contactType', {type: 'ContactType'})
     },
 })
 
 export const ContactType = enumType({
     name: "ContactType",
-    members: ['Phone', 'Email', 'Facebook', 'Instagram', 'Snapchat', 'LinkedIn'],
+    members: ['Phone', 'Email', 'social_media'],
     description: 'Types of Contact'
 })

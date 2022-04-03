@@ -68,6 +68,8 @@ export interface NexusGenInputs {
     nationality?: string | null; // String
     nickName?: string | null; // String
     notes?: string | null; // String
+    sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
+    sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
   }
   PartnerUpdateInput: { // input type
     birthday?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -79,6 +81,8 @@ export interface NexusGenInputs {
     nationality?: string | null; // String
     nickName?: string | null; // String
     notes?: string | null; // String
+    sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
+    sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
   }
   UserCreateInput: { // input type
     email: string; // String!
@@ -92,7 +96,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
-  ContactType: "Email" | "Facebook" | "Instagram" | "LinkedIn" | "Phone" | "Snapchat"
+  ContactType: "Email" | "Phone" | "social_media"
   HookType: "Date" | "Friend" | "Sexting" | "one_night_stand" | "self_pleasure" | "sex_friend"
   ProtectionType: "Protected" | "Unprotected" | "not_required"
   Role: "ADMIN" | "MODERATOR" | "USER"
@@ -117,6 +121,7 @@ export interface NexusGenObjects {
     user?: NexusGenRootTypes['User'] | null; // User
   }
   ContactInfo: { // root type
+    contactType: NexusGenEnums['ContactType']; // ContactType!
     designation?: string | null; // String
     id: string; // ID!
     info?: string | null; // String
@@ -207,10 +212,11 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   ContactInfo: { // field return type
+    contactType: NexusGenEnums['ContactType']; // ContactType!
     designation: string | null; // String
     id: string; // ID!
     info: string | null; // String
-    owner: NexusGenRootTypes['User']; // User!
+    person: NexusGenRootTypes['Person']; // Person!
   }
   Gender: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -273,6 +279,7 @@ export interface NexusGenFieldTypes {
   }
   Person: { // field return type
     birthday: NexusGenScalars['DateTime'] | null; // DateTime
+    contactInfos: Array<NexusGenRootTypes['ContactInfo'] | null> | null; // [ContactInfo]
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     firstName: string | null; // String
     gender: NexusGenRootTypes['Gender'] | null; // Gender
@@ -299,11 +306,8 @@ export interface NexusGenFieldTypes {
     myHooks: Array<NexusGenRootTypes['Hook'] | null> | null; // [Hook]
     myPartners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
     ok: string | null; // String
-    sexPositions: Array<NexusGenEnums['SexPosition'] | null> | null; // [SexPosition]
-    sexualities: Array<NexusGenEnums['Sexuality'] | null> | null; // [Sexuality]
   }
   User: { // field return type
-    contactInfos: Array<NexusGenRootTypes['ContactInfo'] | null> | null; // [ContactInfo]
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     displayName: string | null; // String
     email: string; // String!
@@ -333,10 +337,11 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   ContactInfo: { // field return type name
+    contactType: 'ContactType'
     designation: 'String'
     id: 'ID'
     info: 'String'
-    owner: 'User'
+    person: 'Person'
   }
   Gender: { // field return type name
     createdAt: 'DateTime'
@@ -399,6 +404,7 @@ export interface NexusGenFieldTypeNames {
   }
   Person: { // field return type name
     birthday: 'DateTime'
+    contactInfos: 'ContactInfo'
     createdAt: 'DateTime'
     firstName: 'String'
     gender: 'Gender'
@@ -425,11 +431,8 @@ export interface NexusGenFieldTypeNames {
     myHooks: 'Hook'
     myPartners: 'Partner'
     ok: 'String'
-    sexPositions: 'SexPosition'
-    sexualities: 'Sexuality'
   }
   User: { // field return type name
-    contactInfos: 'ContactInfo'
     createdAt: 'DateTime'
     displayName: 'String'
     email: 'String'

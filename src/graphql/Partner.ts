@@ -113,6 +113,8 @@ export const PartnerMutation = extendType({
                         lastName: args.data.lastName,
                         nickName: args.data.nickName,
                         nationality: args.data.nationality,
+                        sexuality: args.data.sexuality,
+                        sexPosition: args.data.sexPosition,
                         birthday: args.data.birthday,
                         how: args.data.how,
                         notes: args.data.notes,
@@ -155,7 +157,7 @@ export const PartnerMutation = extendType({
                     where: {
                         id: args.data.id,
                     },
-                    include: { 
+                    include: {
                         owner: true,
                         person: true,
                     }
@@ -172,6 +174,8 @@ export const PartnerMutation = extendType({
                         lastName: args.data.lastName,
                         nickName: args.data.nickName,
                         nationality: args.data.nationality,
+                        sexuality: args.data.sexuality,
+                        sexPosition: args.data.sexPosition,
                         birthday: args.data.birthday,
                         how: args.data.how,
                         notes: args.data.notes,
@@ -195,9 +199,11 @@ export const PartnerCreateInput = inputObjectType({
         t.string('lastName')
         t.string('nickName')
         t.string('nationality')
+        t.field('sexuality', { type: 'Sexuality' })
+        t.field('sexPosition', { type: 'SexPosition' })
         t.string('how')
         t.string('notes')
-        t.field("birthday", {type: "DateTime"})
+        t.field("birthday", { type: "DateTime" })
 
         t.nonNull.int('genderId')
     },
@@ -212,13 +218,16 @@ export const PartnerUpdateInput = inputObjectType({
         t.string('lastName')
         t.string('nickName')
         t.string('nationality')
+        t.field('sexuality', { type: 'Sexuality' })
+        t.field('sexPosition', { type: 'SexPosition' })
         t.string('how')
         t.string('notes')
-        t.field("birthday", {type: "DateTime"})
+        t.field("birthday", { type: "DateTime" })
 
-
+        // t.field("newContactInfos", { type: "ContactInfoCreateInput" })
 
         t.int('genderId')
 
     },
 })
+

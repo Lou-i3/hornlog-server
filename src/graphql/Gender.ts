@@ -94,19 +94,20 @@ export const GenderQueries = extendType({
                 const username = context.user.user_id;
                 var genders = await context.prisma.gender.findMany({
                     where: {
-                        ownerId: undefined
+                        ownerId: null
                     }
                 })
                 // console.log("sent genders first set : ", genders)
 
-                genders.concat(await context.prisma.user.findUnique({
+                const newSet = await genders.concat(await context.prisma.user.findUnique({
                     where: {
                         username: username,
                         // email: email
                     },
-                }).genders())
-                console.log("sent genders: ", genders)
-                return genders
+                }).genders());
+
+                console.log("sent genders: ", newSet); 
+                return newSet
             },
         })
     },
