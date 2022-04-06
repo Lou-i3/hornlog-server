@@ -8,11 +8,28 @@ type AuthPayload {
 }
 
 type ContactInfo {
-  contactType: ContactType!
   designation: String
   id: ID!
   info: String
   person: Person!
+  type: ContactType!
+}
+
+input ContactInfoCreateInput {
+  designation: String
+  info: String
+  type: ContactType!
+}
+
+input ContactInfoDeleteInput {
+  id: Int!
+}
+
+input ContactInfoUpdateInput {
+  designation: String
+  id: Int!
+  info: String
+  type: ContactType!
 }
 
 """Types of Contact"""
@@ -143,6 +160,7 @@ input PartnerCreateInput {
   how: String
   lastName: String
   nationality: String
+  newContactInfos: [ContactInfoCreateInput]
   nickName: String
   notes: String
   sexPosition: SexPosition
@@ -151,16 +169,19 @@ input PartnerCreateInput {
 
 input PartnerUpdateInput {
   birthday: DateTime
+  deletedContactInfos: [ContactInfoDeleteInput]
   firstName: String
   genderId: Int
   how: String
   id: Int!
   lastName: String
   nationality: String
+  newContactInfos: [ContactInfoCreateInput]
   nickName: String
   notes: String
   sexPosition: SexPosition
   sexuality: Sexuality
+  updatedContactInfos: [ContactInfoUpdateInput]
 }
 
 type Person {

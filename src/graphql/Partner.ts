@@ -126,6 +126,21 @@ export const PartnerMutation = extendType({
                     }
                 })
 
+                args.data.newContactInfos.forEach(async contactInfo => {
+                    await context.prisma.contactInfo.create({
+                        data: {
+                            type: contactInfo.type,
+                            info: contactInfo.info,
+                            designation: contactInfo.designation,
+                            person: {
+                                connect: {
+                                    id: newPerson.id
+                                }
+                            }
+                        }
+                    })
+                })
+
                 return context.prisma.partner.create({
                     data: {
                         person: {
@@ -136,6 +151,7 @@ export const PartnerMutation = extendType({
                         },
                     }, include: {
                         person: true,
+                        contactInfos: true,
                     }
                 })
             },
@@ -165,6 +181,56 @@ export const PartnerMutation = extendType({
                 if (!partner) throw new Error('Partner not found')
                 if (partner.owner.username !== username) throw new Error('Not authorized')
 
+                console.log('creating contactInfos', args.data.newContactInfos);
+
+                // creating new contactInfos
+                args.data.newContactInfos.forEach(async contactInfo => {
+                    await context.prisma.contactInfo.create({
+                        data: {
+                            type: contactInfo.type,
+                            info: contactInfo.info,
+                            designation: contactInfo.designation,
+                            person: {
+                                connect: {
+                                    id: partner.person.id
+                                }
+                            }
+                        }
+                    })
+                })
+
+                console.log('updating existing contactInfos', args.data.updatedContactInfos);
+
+                // updating existing contactInfos
+                args.data.updatedContactInfos.forEach(async contactInfo => {
+                    await context.prisma.contactInfo.update({
+                        where: {
+                            id: contactInfo.id,
+                        },
+                        data: {
+                            type: contactInfo.type,
+                            info: contactInfo.info,
+                            designation: contactInfo.designation,
+                            person: {
+                                connect: {
+                                    id: partner.person.id
+                                }
+                            }
+                        }
+                    })
+                })
+
+                // deleting existing contactInfos
+                args.data.deletedContactInfos.forEach(async contactInfo => {
+                    await context.prisma.contactInfo.delete({
+                        where: {
+                            id: contactInfo.id,
+                        },
+                    })
+                })
+
+                // console.log('updating partner', partner);
+                
                 return context.prisma.person.update({
                     where: {
                         id: partner.person.id,
@@ -205,6 +271,8 @@ export const PartnerCreateInput = inputObjectType({
         t.string('notes')
         t.field("birthday", { type: "DateTime" })
 
+        t.list.field("newContactInfos", { type: "ContactInfoCreateInput" })
+        
         t.nonNull.int('genderId')
     },
 })
@@ -224,10 +292,37 @@ export const PartnerUpdateInput = inputObjectType({
         t.string('notes')
         t.field("birthday", { type: "DateTime" })
 
-        // t.field("newContactInfos", { type: "ContactInfoCreateInput" })
+        t.list.field("newContactInfos", { type: "ContactInfoCreateInput" })
+        t.list.field("updatedContactInfos", { type: "ContactInfoUpdateInput" })
+        t.list.field("deletedContactInfos", { type: "ContactInfoDeleteInput" })
 
         t.int('genderId')
 
     },
 })
 
+export const ContactInfoCreateInput = inputObjectType({
+    name: 'ContactInfoCreateInput',
+    definition(t) {
+        t.string('info')
+        t.string('designation')
+        t.nonNull.field('type', { type: 'ContactType' })
+    }
+})
+
+export const ContactInfoUpdateInput = inputObjectType({
+    name: 'ContactInfoUpdateInput',
+    definition(t) {
+        t.nonNull.int('id')
+        t.string('info')
+        t.string('designation')
+        t.nonNull.field('type', { type: 'ContactType' })
+    }
+})
+
+export const ContactInfoDeleteInput = inputObjectType({
+    name: 'ContactInfoDeleteInput',
+    definition(t) {
+        t.nonNull.int('id')
+    }   
+})

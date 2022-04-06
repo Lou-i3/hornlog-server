@@ -28,6 +28,20 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  ContactInfoCreateInput: { // input type
+    designation?: string | null; // String
+    info?: string | null; // String
+    type: NexusGenEnums['ContactType']; // ContactType!
+  }
+  ContactInfoDeleteInput: { // input type
+    id: number; // Int!
+  }
+  ContactInfoUpdateInput: { // input type
+    designation?: string | null; // String
+    id: number; // Int!
+    info?: string | null; // String
+    type: NexusGenEnums['ContactType']; // ContactType!
+  }
   GenderInput: { // input type
     label: string; // String!
   }
@@ -66,6 +80,7 @@ export interface NexusGenInputs {
     how?: string | null; // String
     lastName?: string | null; // String
     nationality?: string | null; // String
+    newContactInfos?: Array<NexusGenInputs['ContactInfoCreateInput'] | null> | null; // [ContactInfoCreateInput]
     nickName?: string | null; // String
     notes?: string | null; // String
     sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
@@ -73,16 +88,19 @@ export interface NexusGenInputs {
   }
   PartnerUpdateInput: { // input type
     birthday?: NexusGenScalars['DateTime'] | null; // DateTime
+    deletedContactInfos?: Array<NexusGenInputs['ContactInfoDeleteInput'] | null> | null; // [ContactInfoDeleteInput]
     firstName?: string | null; // String
     genderId?: number | null; // Int
     how?: string | null; // String
     id: number; // Int!
     lastName?: string | null; // String
     nationality?: string | null; // String
+    newContactInfos?: Array<NexusGenInputs['ContactInfoCreateInput'] | null> | null; // [ContactInfoCreateInput]
     nickName?: string | null; // String
     notes?: string | null; // String
     sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
     sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
+    updatedContactInfos?: Array<NexusGenInputs['ContactInfoUpdateInput'] | null> | null; // [ContactInfoUpdateInput]
   }
   UserCreateInput: { // input type
     email: string; // String!
@@ -121,10 +139,10 @@ export interface NexusGenObjects {
     user?: NexusGenRootTypes['User'] | null; // User
   }
   ContactInfo: { // root type
-    contactType: NexusGenEnums['ContactType']; // ContactType!
     designation?: string | null; // String
     id: string; // ID!
     info?: string | null; // String
+    type: NexusGenEnums['ContactType']; // ContactType!
   }
   Gender: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -212,11 +230,11 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User'] | null; // User
   }
   ContactInfo: { // field return type
-    contactType: NexusGenEnums['ContactType']; // ContactType!
     designation: string | null; // String
     id: string; // ID!
     info: string | null; // String
     person: NexusGenRootTypes['Person']; // Person!
+    type: NexusGenEnums['ContactType']; // ContactType!
   }
   Gender: { // field return type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -337,11 +355,11 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   ContactInfo: { // field return type name
-    contactType: 'ContactType'
     designation: 'String'
     id: 'ID'
     info: 'String'
     person: 'Person'
+    type: 'ContactType'
   }
   Gender: { // field return type name
     createdAt: 'DateTime'

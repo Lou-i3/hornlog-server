@@ -40,7 +40,7 @@ export const ContactInfo = objectType({
         t.string('info')
         t.string('designation')
 
-        t.nonNull.field('contactType', {type: 'ContactType'})
+        t.nonNull.field('type', {type: 'ContactType'})
     },
 })
 
