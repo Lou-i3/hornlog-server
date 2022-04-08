@@ -33,6 +33,7 @@ export const User = objectType({
         t.field('createdAt', { type: 'DateTime' })
         t.nonNull.field('updatedAt', { type: 'DateTime' })
         t.nonNull.field('lastLoginAt', { type: 'DateTime' })
+        
         t.list.field('hooks', {
             type: 'Hook',
             resolve: (parent, _, context) => {

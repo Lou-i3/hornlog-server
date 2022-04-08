@@ -63,14 +63,27 @@ export const Hook = objectType({
                     .location()
             },
         })
-        t.field('partners', {
-            type: 'HooksOnPartners',
-            resolve: (parent, _, context) => {
-                return context.prisma.hook
-                    .findUnique({
-                        where: { id: parent.id || undefined },
-                    })
-                    .partners()
+        t.list.field('partners', {
+            type: 'Partner',
+            resolve: async (parent, _, context) => {
+
+
+                const hooksOnPartners = await context.prisma.hooksOnPartners.findMany({
+                    where: { hookId: parent.id },
+                    include: {
+                        partner: {
+                            include: {
+                                person: true
+                            }
+                        }
+                    }
+                })
+
+                const partners = hooksOnPartners.map(hooksOnPartner => hooksOnPartner.partner)
+
+                // console.log("coucou")
+                // console.log(partners)
+                return partners
             },
         })
     },
@@ -100,14 +113,34 @@ export const HookQuery = extendType({
                 const username = context.user.user_id;
                 // const email = context.user.email;
                 console.log('contect myHooks', context.user);
-                console.log(username)
+                // console.log(username)
                 // if (typeof userId !== string) return res.status(404).send('invalid username')
-                return context.prisma.user.findUnique({
+                const user = await context.prisma.user.findUnique({
                     where: {
-                        username: username,
+                        username: username
+                    }
+                })
+                const hooks = await context.prisma.hook.findMany({
+                    where: {
+                        owner: user,
                         // email: email
                     },
-                }).hooks()
+                    include: {
+                        partners: {
+                            include: {
+                                partner: {
+                                    include: {
+                                        person: true
+                                    }
+                                }
+                            }
+                        },
+                    }
+                });
+                // console.log('hooks', hooks);
+                // console.log('hooks 1', hooks[0]);
+                // console.log('hooks partners', hooks[0].partners);
+                return hooks
             },
         })
 

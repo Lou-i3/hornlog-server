@@ -45,8 +45,12 @@ export const Partner = objectType({
                     where: { partnerId: parent.id },
                     include: { hook: true }
                 })
+                // .then(hooksOnPartners => {
+                //     return hooksOnPartners.map(hooksOnPartner => hooksOnPartner.hook)
+                // })
                 const hooks = hooksOnPartners.map(hooksOnPartner => hooksOnPartner.hook)
                 // console.log("hooks of myhooks", hooksOnPartners)
+
                 return hooks
             },
         })
@@ -115,6 +119,7 @@ export const PartnerMutation = extendType({
                         nationality: args.data.nationality,
                         sexuality: args.data.sexuality,
                         sexPosition: args.data.sexPosition,
+                        picture: args.data.picture,
                         birthday: args.data.birthday,
                         how: args.data.how,
                         notes: args.data.notes,
@@ -242,6 +247,7 @@ export const PartnerMutation = extendType({
                         nationality: args.data.nationality,
                         sexuality: args.data.sexuality,
                         sexPosition: args.data.sexPosition,
+                        picture: args.data.picture,
                         birthday: args.data.birthday,
                         how: args.data.how,
                         notes: args.data.notes,
@@ -267,6 +273,7 @@ export const PartnerCreateInput = inputObjectType({
         t.string('nationality')
         t.field('sexuality', { type: 'Sexuality' })
         t.field('sexPosition', { type: 'SexPosition' })
+        t.string('picture')
         t.string('how')
         t.string('notes')
         t.field("birthday", { type: "DateTime" })
@@ -288,6 +295,7 @@ export const PartnerUpdateInput = inputObjectType({
         t.string('nationality')
         t.field('sexuality', { type: 'Sexuality' })
         t.field('sexPosition', { type: 'SexPosition' })
+        t.string('picture')
         t.string('how')
         t.string('notes')
         t.field("birthday", { type: "DateTime" })

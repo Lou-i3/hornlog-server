@@ -78,7 +78,7 @@ model Person {
   birthday    DateTime?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now()) @updatedAt
-  picture     String?    @db.VarChar(255)
+  picture     String?    @db.LongText
   nationality String?    @db.VarChar(255)
   sexuality   Sexuality?
   partner     Partner?

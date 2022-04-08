@@ -83,6 +83,7 @@ export interface NexusGenInputs {
     newContactInfos?: Array<NexusGenInputs['ContactInfoCreateInput'] | null> | null; // [ContactInfoCreateInput]
     nickName?: string | null; // String
     notes?: string | null; // String
+    picture?: string | null; // String
     sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
     sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
   }
@@ -98,6 +99,7 @@ export interface NexusGenInputs {
     newContactInfos?: Array<NexusGenInputs['ContactInfoCreateInput'] | null> | null; // [ContactInfoCreateInput]
     nickName?: string | null; // String
     notes?: string | null; // String
+    picture?: string | null; // String
     sexPosition?: NexusGenEnums['SexPosition'] | null; // SexPosition
     sexuality?: NexusGenEnums['Sexuality'] | null; // Sexuality
     updatedContactInfos?: Array<NexusGenInputs['ContactInfoUpdateInput'] | null> | null; // [ContactInfoUpdateInput]
@@ -258,7 +260,7 @@ export interface NexusGenFieldTypes {
     note: string | null; // String
     orgasm: boolean | null; // Boolean
     owner: NexusGenRootTypes['User']; // User!
-    partners: NexusGenRootTypes['HooksOnPartners'] | null; // HooksOnPartners
+    partners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
     porn: boolean | null; // Boolean
     protectionType: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -383,7 +385,7 @@ export interface NexusGenFieldTypeNames {
     note: 'String'
     orgasm: 'Boolean'
     owner: 'User'
-    partners: 'HooksOnPartners'
+    partners: 'Partner'
     porn: 'Boolean'
     protectionType: 'ProtectionType'
     updatedAt: 'DateTime'

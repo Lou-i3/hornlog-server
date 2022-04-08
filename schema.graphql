@@ -71,7 +71,7 @@ type Hook {
   note: String
   orgasm: Boolean
   owner: User!
-  partners: HooksOnPartners
+  partners: [Partner]
   porn: Boolean
   protectionType: ProtectionType
   updatedAt: DateTime!
@@ -163,6 +163,7 @@ input PartnerCreateInput {
   newContactInfos: [ContactInfoCreateInput]
   nickName: String
   notes: String
+  picture: String
   sexPosition: SexPosition
   sexuality: Sexuality
 }
@@ -179,6 +180,7 @@ input PartnerUpdateInput {
   newContactInfos: [ContactInfoCreateInput]
   nickName: String
   notes: String
+  picture: String
   sexPosition: SexPosition
   sexuality: Sexuality
   updatedContactInfos: [ContactInfoUpdateInput]
