@@ -73,23 +73,24 @@ type Hook {
   owner: User!
   partners: [Partner]
   porn: Boolean
-  protectionType: ProtectionType
+  protected: ProtectionType
   updatedAt: DateTime!
 }
 
 input HookCreateInput {
   addToAppleHealth: Boolean
+  additionalPartners: [PartnerToHookInput]
   archived: Boolean
   dateTime: DateTime
   duration: Int
   grade: Int
   hookType: HookType!
   mood: String
+  newPartners: [NewPartnerToHookInput]
   note: String
   orgasm: Boolean
   porn: Boolean
-  protected: Boolean
-  protectionType: ProtectionType
+  protected: ProtectionType
 }
 
 """Types of Hook"""
@@ -104,17 +105,20 @@ enum HookType {
 
 input HookUpdateInput {
   addToAppleHealth: Boolean
+  additionalPartners: [PartnerToHookInput]
   archived: Boolean
   dateTime: DateTime
   duration: Int
   grade: Int
-  hookType: HookType
+  hookType: HookType!
+  id: Int!
   mood: String
+  newPartners: [NewPartnerToHookInput]
   note: String
   orgasm: Boolean
   porn: Boolean
-  protected: Boolean
-  protectionType: ProtectionType
+  protected: ProtectionType
+  removedPartners: [PartnerToHookInput]
 }
 
 type HooksOnPartners {
@@ -146,6 +150,10 @@ type Mutation {
   signupUser(data: UserCreateInput!): User!
 }
 
+input NewPartnerToHookInput {
+  nickName: String!
+}
+
 type Partner {
   hooks: [Hook]
   id: ID!
@@ -166,6 +174,10 @@ input PartnerCreateInput {
   picture: String
   sexPosition: SexPosition
   sexuality: Sexuality
+}
+
+input PartnerToHookInput {
+  id: Int!
 }
 
 input PartnerUpdateInput {

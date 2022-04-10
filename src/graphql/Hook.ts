@@ -47,7 +47,7 @@ export const Hook = objectType({
         t.boolean('porn')
         t.string('note')
         t.int('grade')
-        t.field('protectionType', { type: 'ProtectionType' })
+        t.field('protected', { type: 'ProtectionType' })
         t.string('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
@@ -171,11 +171,29 @@ export const HookMutation = extendType({
                 console.log("AddHook")
                 const username = context.user.user_id;
 
+                let additionalPartners = args.data.additionalPartners;
+                let partnersToAssociate = [];
+                if (additionalPartners && additionalPartners.length > 0) {
+                    partnersToAssociate = additionalPartners.map(partner => {
+                        return {
+                            assignedBy: username,
+                            partner: {
+                                connect: {
+                                    id: partner.id
+                                }
+                            }
+                        }
+                    })
+                }
+
                 return context.prisma.hook.create({
                     data: {
                         hookType: args.data.hookType,
                         owner: {
                             connect: { username: username },
+                        },
+                        partners: {
+                            create: partnersToAssociate
                         },
                         dateTime: args.data.dateTime,
                         duration: args.data.duration,
@@ -202,14 +220,82 @@ export const HookMutation = extendType({
                 ),
             },
             resolve: async (_, args, context) => {
-                console.log("AddHook")
+                console.log("editHook")
                 const username = context.user.user_id;
 
+                // const partners = args.data.
+
+                // console.log(args.data);
+
+
+                let additionalPartners = args.data.additionalPartners;
+                let partnersToAssociate = [];
+                if (additionalPartners && additionalPartners.length > 0) {
+                    partnersToAssociate = additionalPartners.map(partner => {
+                        return {
+                            assignedBy: username,
+                            partner: {
+                                connect: {
+                                    id: partner.id
+                                }
+                            }
+                        }
+                    })
+                }
+
+                let newPartners = args.data.newPartners;
+                let partnersToCreate = [];
+                if (newPartners && newPartners.length > 0) {
+                    partnersToCreate = newPartners.map(partner => {
+                        return {
+                            assignedBy: username,
+                            partner: {
+                                
+                                create: {
+                                    owner: {
+                                        connect: {
+                                            username: username
+                                        }
+                                    },
+                                    person: {
+                                        create: {
+                                            nickName: partner.nickName
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+
+                let removedPartners = args.data.removedPartners;
+                let partnersToDelete = [];
+                if (removedPartners && removedPartners.length > 0) {
+                    partnersToDelete = removedPartners.map((partner) => {
+                        return {
+                            partnerId: partner.id,
+                            hookId: args.data.id,
+                        };
+                    })
+                }
+
+                console.log("partnersToAssociate", partnersToAssociate);
+                console.log("partnersToCreate", partnersToCreate);
+                console.log("partnersToDelete", partnersToDelete);
+                // console.log("partnersToCreate connect", partnersToCreate[0].partner.connect);
+
                 return context.prisma.hook.update({
+                    where: {
+                        id: args.data.id,
+                    },
                     data: {
                         hookType: args.data.hookType,
                         owner: {
                             connect: { username: username },
+                        },
+                        partners: {
+                            create: [...partnersToAssociate, ...partnersToCreate],
+                            deleteMany: partnersToDelete
                         },
                         dateTime: args.data.dateTime,
                         duration: args.data.duration,
@@ -239,28 +325,48 @@ export const HookCreateInput = inputObjectType({
         t.boolean('porn')
         t.string('note')
         t.int('grade')
-        t.field('protectionType', { type: 'ProtectionType' })
+        t.field('protected', { type: 'ProtectionType' })
         t.string('mood')
         t.boolean('addToAppleHealth')
-        t.boolean('protected')
         t.boolean('archived')
+
+        t.list.field('additionalPartners', { type: 'PartnerToHookInput' })
+        t.list.field('newPartners', { type: 'NewPartnerToHookInput' })
     },
 })
 
 export const HookUpdateInput = inputObjectType({
     name: 'HookUpdateInput',
     definition(t) {
-        t.field('hookType', { type: 'HookType' })
+        t.nonNull.int('id')
+        t.nonNull.field('hookType', { type: 'HookType' })
         t.field('dateTime', { type: 'DateTime' })
         t.int('duration')
         t.boolean('orgasm')
         t.boolean('porn')
         t.string('note')
         t.int('grade')
-        t.field('protectionType', { type: 'ProtectionType' })
+        t.field('protected', { type: 'ProtectionType' })
         t.string('mood')
         t.boolean('addToAppleHealth')
-        t.boolean('protected')
         t.boolean('archived')
+
+        t.list.field('additionalPartners', { type: 'PartnerToHookInput' })
+        t.list.field('removedPartners', { type: 'PartnerToHookInput' })
+        t.list.field('newPartners', { type: 'NewPartnerToHookInput' })
     },
+})
+
+export const PartnerToHookInput = inputObjectType({
+    name: 'PartnerToHookInput',
+    definition(t) {
+        t.nonNull.int('id')
+        // t.nonNull.field('partner', { type: 'Partner' })
+    }
+})
+export const NewPartnerToHookInput = inputObjectType({
+    name: 'NewPartnerToHookInput',
+    definition(t) {
+        t.nonNull.string('nickName')
+    }
 })
