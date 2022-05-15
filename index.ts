@@ -21,6 +21,7 @@ const server = new ApolloServer({
         })
         // console.log('index headers', req.req.res.req.headers );
         console.log('user index', user);
+        // console.log('index req', req)
         return { ...req, prisma, user }
       },
 });

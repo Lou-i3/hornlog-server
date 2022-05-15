@@ -156,7 +156,6 @@ export const PartnerMutation = extendType({
                         },
                     }, include: {
                         person: true,
-                        contactInfos: true,
                     }
                 })
             },
