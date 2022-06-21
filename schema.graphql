@@ -133,7 +133,15 @@ type Location {
   id: ID!
   owner: User!
   person: Person!
+  type: LocationType
   updatedAt: DateTime!
+}
+
+"""Types of Location"""
+enum LocationType {
+  my_place
+  other
+  your_place
 }
 
 type Mutation {

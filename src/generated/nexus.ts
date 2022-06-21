@@ -128,6 +128,7 @@ export interface NexusGenInputs {
 export interface NexusGenEnums {
   ContactType: "Email" | "Phone" | "social_media"
   HookType: "Date" | "Friend" | "Sexting" | "one_night_stand" | "self_pleasure" | "sex_friend"
+  LocationType: "my_place" | "other" | "your_place"
   ProtectionType: "Protected" | "Unprotected" | "not_required"
   Role: "ADMIN" | "MODERATOR" | "USER"
   SexPosition: "bottom" | "top" | "vers_bottom" | "vers_top" | "versa"
@@ -185,6 +186,7 @@ export interface NexusGenObjects {
   Location: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
+    type?: NexusGenEnums['LocationType'] | null; // LocationType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Mutation: {};
@@ -286,6 +288,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     owner: NexusGenRootTypes['User']; // User!
     person: NexusGenRootTypes['Person']; // Person!
+    type: NexusGenEnums['LocationType'] | null; // LocationType
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Mutation: { // field return type
@@ -411,6 +414,7 @@ export interface NexusGenFieldTypeNames {
     id: 'ID'
     owner: 'User'
     person: 'Person'
+    type: 'LocationType'
     updatedAt: 'DateTime'
   }
   Mutation: { // field return type name

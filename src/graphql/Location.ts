@@ -51,6 +51,14 @@ export const Location = objectType({
             },
         })
 
+        t.field('type', { type: 'LocationType' })
+
         
     },
+})
+
+export const LocationType = enumType({
+    name: "LocationType",
+    members: ['my_place', 'your_place', 'other'],
+    description: 'Types of Location'
 })
