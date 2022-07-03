@@ -151,6 +151,7 @@ type Mutation {
   addUser(displayName: String!, email: String!, password: String, username: String!): AuthPayload!
   addUserGender(data: GenderInput!): Gender!
   deleteGender(id: Int!): Gender!
+  deletePartner(id: Int!): Partner!
   editGender(data: GenderInput!, id: Int!): Gender!
   editHook(data: HookUpdateInput!): Hook!
   editPartner(data: PartnerUpdateInput!): Partner!

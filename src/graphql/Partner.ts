@@ -234,7 +234,7 @@ export const PartnerMutation = extendType({
                 })
 
                 // console.log('updating partner', partner);
-                
+
                 return context.prisma.person.update({
                     where: {
                         id: partner.person.id,
@@ -260,6 +260,50 @@ export const PartnerMutation = extendType({
             },
         })
 
+        t.nonNull.field('deletePartner', {
+            type: 'Partner',
+            args: {
+                id: nonNull(intArg())
+            },
+            resolve: async (_, args, context) => {
+                console.log("deletePartner")
+
+                const partner = await PartnerOwnerCheck(args, context);
+
+                // delete contact infos
+                console.log('deleting contactInfos', partner.contactInfos);
+                await context.prisma.contactInfo.deleteMany({
+                    where: {
+                        person: {
+                            id: partner.person.id,
+                        },
+                    },
+                })
+
+                // delete person
+                console.log('deleting person', partner.person);
+                const resPerson = await context.prisma.person.delete({
+                    where: {
+                        id: partner.person.id,
+                    },
+                })
+                console.log('deleted person', resPerson);
+
+                // return partner
+
+                // delete partner
+                console.log('deleting partner', partner);
+                // await context.prisma.partner.delete({
+                //     where: {
+                //         id: args.id,
+                //         // partnerId: partner.id,
+                //         // personId: partner.person.id,
+                //     },
+                // })
+
+                return partner;
+            },
+        })
     },
 })
 
@@ -278,7 +322,7 @@ export const PartnerCreateInput = inputObjectType({
         t.field("birthday", { type: "DateTime" })
 
         t.list.field("newContactInfos", { type: "ContactInfoCreateInput" })
-        
+
         t.nonNull.int('genderId')
     },
 })
@@ -331,5 +375,26 @@ export const ContactInfoDeleteInput = inputObjectType({
     name: 'ContactInfoDeleteInput',
     definition(t) {
         t.nonNull.int('id')
-    }   
+    }
 })
+
+// helper 
+export const PartnerOwnerCheck = async (args, context) => {
+    const username = context.user.user_id;
+    const partner = await context.prisma.partner.findUnique({
+        where: {
+            id: args.id,
+        },
+        include: {
+            owner: true,
+            person: true,
+        }
+    });
+    if (!partner) throw new Error('Partner not found')
+    if (partner.owner.username !== username) throw new Error('Not authorized')
+
+    // console.log('username', username)
+    // console.log('partner username', partner.owner.username);
+    // console.log("partner", partner)
+    return partner;
+}

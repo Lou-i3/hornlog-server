@@ -298,6 +298,7 @@ export interface NexusGenFieldTypes {
     addUser: NexusGenRootTypes['AuthPayload']; // AuthPayload!
     addUserGender: NexusGenRootTypes['Gender']; // Gender!
     deleteGender: NexusGenRootTypes['Gender']; // Gender!
+    deletePartner: NexusGenRootTypes['Partner']; // Partner!
     editGender: NexusGenRootTypes['Gender']; // Gender!
     editHook: NexusGenRootTypes['Hook']; // Hook!
     editPartner: NexusGenRootTypes['Partner']; // Partner!
@@ -424,6 +425,7 @@ export interface NexusGenFieldTypeNames {
     addUser: 'AuthPayload'
     addUserGender: 'Gender'
     deleteGender: 'Gender'
+    deletePartner: 'Partner'
     editGender: 'Gender'
     editHook: 'Hook'
     editPartner: 'Partner'
@@ -511,6 +513,9 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['GenderInput']; // GenderInput!
     }
     deleteGender: { // args
+      id: number; // Int!
+    }
+    deletePartner: { // args
       id: number; // Int!
     }
     editGender: { // args
