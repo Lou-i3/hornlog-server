@@ -79,6 +79,7 @@ export const permissions = shield({
     editGender: rules.isAuthenticatedUser,
     deleteGender: rules.isAuthenticatedUser,
     deletePartner: rules.isAuthenticatedUser,
+    deleteHook: rules.isAuthenticatedUser,
   },
   Hook: rules.isAuthenticatedUser
 },

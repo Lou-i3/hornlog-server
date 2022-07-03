@@ -250,7 +250,7 @@ export const HookMutation = extendType({
                         return {
                             assignedBy: username,
                             partner: {
-                                
+
                                 create: {
                                     owner: {
                                         connect: {
@@ -312,6 +312,24 @@ export const HookMutation = extendType({
             },
         })
 
+        t.nonNull.field('deleteHook', {
+            type: 'Hook',
+            args: {
+                id: nonNull(intArg())
+            },
+            resolve: async (_, args, context) => {
+                console.log("deleteHook")
+
+                const hook = await HookOwnerCheck(args, context);
+
+                return context.prisma.hook.delete({
+                    where: {
+                        id: args.id,
+                    }
+                });
+            },
+        })
+
     },
 })
 
@@ -370,3 +388,24 @@ export const NewPartnerToHookInput = inputObjectType({
         t.nonNull.string('nickName')
     }
 })
+
+export const HookOwnerCheck = async (args, context) => {
+    const hook = await context.prisma.hook.findUnique({
+        where: {
+            id: args.id,
+        },
+        include: {
+            owner: true,
+        }
+    });
+
+    if (!hook) {
+        throw new Error('Hook not found');
+    }
+
+    if (hook.owner.username !== context.user.user_id) {
+        throw new Error('You are not the owner of this hook');
+    }
+
+    return hook;
+}
