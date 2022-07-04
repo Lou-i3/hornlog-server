@@ -127,6 +127,8 @@ model Hook {
   duration         Int?
   orgasm           Boolean?
   porn             Boolean?
+  sex              Boolean?
+  Penetration      Boolean?
   note             String?
   grade            Int?
   protected        ProtectionType?

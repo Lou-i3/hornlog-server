@@ -57,8 +57,10 @@ export interface NexusGenInputs {
     newPartners?: Array<NexusGenInputs['NewPartnerToHookInput'] | null> | null; // [NewPartnerToHookInput]
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
+    penetration?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
     protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    sex?: boolean | null; // Boolean
   }
   HookUpdateInput: { // input type
     addToAppleHealth?: boolean | null; // Boolean
@@ -73,9 +75,11 @@ export interface NexusGenInputs {
     newPartners?: Array<NexusGenInputs['NewPartnerToHookInput'] | null> | null; // [NewPartnerToHookInput]
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
+    penetration?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
     protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     removedPartners?: Array<NexusGenInputs['PartnerToHookInput'] | null> | null; // [PartnerToHookInput]
+    sex?: boolean | null; // Boolean
   }
   NewPartnerToHookInput: { // input type
     nickName: string; // String!
@@ -175,8 +179,10 @@ export interface NexusGenObjects {
     mood?: string | null; // String
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
+    penetration?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
     protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    sex?: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   HooksOnPartners: { // root type
@@ -273,8 +279,10 @@ export interface NexusGenFieldTypes {
     orgasm: boolean | null; // Boolean
     owner: NexusGenRootTypes['User']; // User!
     partners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
+    penetration: boolean | null; // Boolean
     porn: boolean | null; // Boolean
     protected: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    sex: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   HooksOnPartners: { // field return type
@@ -401,8 +409,10 @@ export interface NexusGenFieldTypeNames {
     orgasm: 'Boolean'
     owner: 'User'
     partners: 'Partner'
+    penetration: 'Boolean'
     porn: 'Boolean'
     protected: 'ProtectionType'
+    sex: 'Boolean'
     updatedAt: 'DateTime'
   }
   HooksOnPartners: { // field return type name

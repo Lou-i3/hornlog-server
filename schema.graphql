@@ -72,8 +72,10 @@ type Hook {
   orgasm: Boolean
   owner: User!
   partners: [Partner]
+  penetration: Boolean
   porn: Boolean
   protected: ProtectionType
+  sex: Boolean
   updatedAt: DateTime!
 }
 
@@ -89,8 +91,10 @@ input HookCreateInput {
   newPartners: [NewPartnerToHookInput]
   note: String
   orgasm: Boolean
+  penetration: Boolean
   porn: Boolean
   protected: ProtectionType
+  sex: Boolean
 }
 
 """Types of Hook"""
@@ -116,9 +120,11 @@ input HookUpdateInput {
   newPartners: [NewPartnerToHookInput]
   note: String
   orgasm: Boolean
+  penetration: Boolean
   porn: Boolean
   protected: ProtectionType
   removedPartners: [PartnerToHookInput]
+  sex: Boolean
 }
 
 type HooksOnPartners {
