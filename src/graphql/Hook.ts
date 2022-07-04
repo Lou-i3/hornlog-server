@@ -50,7 +50,7 @@ export const Hook = objectType({
         t.string('note')
         t.int('grade')
         t.field('protected', { type: 'ProtectionType' })
-        t.string('mood')
+        t.int('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
 
@@ -352,7 +352,7 @@ export const HookCreateInput = inputObjectType({
         t.string('note')
         t.int('grade')
         t.field('protected', { type: 'ProtectionType' })
-        t.string('mood')
+        t.int('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
 
@@ -375,7 +375,7 @@ export const HookUpdateInput = inputObjectType({
         t.string('note')
         t.int('grade')
         t.field('protected', { type: 'ProtectionType' })
-        t.string('mood')
+        t.int('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
 
