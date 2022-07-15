@@ -39,9 +39,9 @@ model User {
   person       Person?
   partners     Partner[]
 
-  locations    Location[]
-  genders      Gender[]
-  
+  locations Location[]
+  genders   Gender[]
+
   @@map("user")
 }
 
@@ -71,8 +71,8 @@ model Person {
   id          Int        @id @default(autoincrement())
   user        User?      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId      Int?       @unique // relation scalar field (used in the `@relation` attribute above)
-  firstName   String?     @db.VarChar(255)
-  lastName    String?     @db.VarChar(255)
+  firstName   String?    @db.VarChar(255)
+  lastName    String?    @db.VarChar(255)
   nickName    String?    @db.VarChar(255)
   how         String?    @db.VarChar(255)
   birthday    DateTime?
@@ -83,11 +83,11 @@ model Person {
   sexuality   Sexuality?
   partner     Partner?
   locations   Location[]
-  gender      Gender?     @relation(fields: [genderId], references: [id])
+  gender      Gender?    @relation(fields: [genderId], references: [id])
   genderId    Int?
-  notes       String?   @db.VarChar(255)
+  notes       String?    @db.VarChar(255)
 
-  sexPosition SexPosition?
+  sexPosition  SexPosition?
   contactInfos ContactInfo[]
 }
 
@@ -128,7 +128,9 @@ model Hook {
   orgasm           Boolean?
   porn             Boolean?
   sex              Boolean?
-  Penetration      Boolean?
+  penetration      Boolean?
+  pill             Boolean?
+  protection       Boolean?
   note             String?
   grade            Int?
   protected        ProtectionType?
@@ -177,9 +179,9 @@ model Gender {
   updatedAt DateTime @default(now()) @updatedAt
   label     String
 
-  owner   User? @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownerId Int?  
-  people Person[]
+  owner   User?    @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId Int?
+  people  Person[]
 }
 
 enum SexPosition {
