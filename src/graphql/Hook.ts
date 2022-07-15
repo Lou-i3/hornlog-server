@@ -47,6 +47,8 @@ export const Hook = objectType({
         t.boolean('porn')
         t.boolean('sex')
         t.boolean('penetration')
+        t.boolean('pill')
+        t.boolean('protection')
         t.string('note')
         t.int('grade')
         t.field('protected', { type: 'ProtectionType' })
@@ -203,6 +205,8 @@ export const HookMutation = extendType({
                         porn: args.data.porn,
                         sex: args.data.sex,
                         penetration: args.data.penetration,
+                        protection: args.data.protection,
+                        pill: args.data.pill,
                         note: args.data.note,
                         grade: args.data.grade,
                         protected: args.data.protected,
@@ -307,6 +311,8 @@ export const HookMutation = extendType({
                         porn: args.data.porn,
                         sex: args.data.sex,
                         penetration: args.data.penetration,
+                        protection: args.data.protection,
+                        pill: args.data.pill,
                         note: args.data.note,
                         grade: args.data.grade,
                         protected: args.data.protected,
@@ -349,6 +355,8 @@ export const HookCreateInput = inputObjectType({
         t.boolean('porn')
         t.boolean('sex')
         t.boolean('penetration')
+        t.boolean('protection')
+        t.boolean('pill')
         t.string('note')
         t.int('grade')
         t.field('protected', { type: 'ProtectionType' })
@@ -372,6 +380,8 @@ export const HookUpdateInput = inputObjectType({
         t.boolean('porn')
         t.boolean('sex')
         t.boolean('penetration')
+        t.boolean('protection')
+        t.boolean('pill')
         t.string('note')
         t.int('grade')
         t.field('protected', { type: 'ProtectionType' })

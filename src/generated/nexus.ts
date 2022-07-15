@@ -53,13 +53,15 @@ export interface NexusGenInputs {
     duration?: number | null; // Int
     grade?: number | null; // Int
     hookType: NexusGenEnums['HookType']; // HookType!
-    mood?: string | null; // String
+    mood?: number | null; // Int
     newPartners?: Array<NexusGenInputs['NewPartnerToHookInput'] | null> | null; // [NewPartnerToHookInput]
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
     penetration?: boolean | null; // Boolean
+    pill?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
     protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    protection?: boolean | null; // Boolean
     sex?: boolean | null; // Boolean
   }
   HookUpdateInput: { // input type
@@ -71,13 +73,15 @@ export interface NexusGenInputs {
     grade?: number | null; // Int
     hookType: NexusGenEnums['HookType']; // HookType!
     id: number; // Int!
-    mood?: string | null; // String
+    mood?: number | null; // Int
     newPartners?: Array<NexusGenInputs['NewPartnerToHookInput'] | null> | null; // [NewPartnerToHookInput]
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
     penetration?: boolean | null; // Boolean
+    pill?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
     protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    protection?: boolean | null; // Boolean
     removedPartners?: Array<NexusGenInputs['PartnerToHookInput'] | null> | null; // [PartnerToHookInput]
     sex?: boolean | null; // Boolean
   }
@@ -176,12 +180,14 @@ export interface NexusGenObjects {
     grade?: number | null; // Int
     hookType: NexusGenEnums['HookType']; // HookType!
     id: string; // ID!
-    mood?: string | null; // String
+    mood?: number | null; // Int
     note?: string | null; // String
     orgasm?: boolean | null; // Boolean
     penetration?: boolean | null; // Boolean
+    pill?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
     protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    protection?: boolean | null; // Boolean
     sex?: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -274,14 +280,16 @@ export interface NexusGenFieldTypes {
     hookType: NexusGenEnums['HookType']; // HookType!
     id: string; // ID!
     location: NexusGenRootTypes['Location'] | null; // Location
-    mood: string | null; // String
+    mood: number | null; // Int
     note: string | null; // String
     orgasm: boolean | null; // Boolean
     owner: NexusGenRootTypes['User']; // User!
     partners: Array<NexusGenRootTypes['Partner'] | null> | null; // [Partner]
     penetration: boolean | null; // Boolean
+    pill: boolean | null; // Boolean
     porn: boolean | null; // Boolean
     protected: NexusGenEnums['ProtectionType'] | null; // ProtectionType
+    protection: boolean | null; // Boolean
     sex: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -404,14 +412,16 @@ export interface NexusGenFieldTypeNames {
     hookType: 'HookType'
     id: 'ID'
     location: 'Location'
-    mood: 'String'
+    mood: 'Int'
     note: 'String'
     orgasm: 'Boolean'
     owner: 'User'
     partners: 'Partner'
     penetration: 'Boolean'
+    pill: 'Boolean'
     porn: 'Boolean'
     protected: 'ProtectionType'
+    protection: 'Boolean'
     sex: 'Boolean'
     updatedAt: 'DateTime'
   }

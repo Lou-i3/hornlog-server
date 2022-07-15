@@ -67,14 +67,16 @@ type Hook {
   hookType: HookType!
   id: ID!
   location: Location
-  mood: String
+  mood: Int
   note: String
   orgasm: Boolean
   owner: User!
   partners: [Partner]
   penetration: Boolean
+  pill: Boolean
   porn: Boolean
   protected: ProtectionType
+  protection: Boolean
   sex: Boolean
   updatedAt: DateTime!
 }
@@ -87,13 +89,15 @@ input HookCreateInput {
   duration: Int
   grade: Int
   hookType: HookType!
-  mood: String
+  mood: Int
   newPartners: [NewPartnerToHookInput]
   note: String
   orgasm: Boolean
   penetration: Boolean
+  pill: Boolean
   porn: Boolean
   protected: ProtectionType
+  protection: Boolean
   sex: Boolean
 }
 
@@ -116,13 +120,15 @@ input HookUpdateInput {
   grade: Int
   hookType: HookType!
   id: Int!
-  mood: String
+  mood: Int
   newPartners: [NewPartnerToHookInput]
   note: String
   orgasm: Boolean
   penetration: Boolean
+  pill: Boolean
   porn: Boolean
   protected: ProtectionType
+  protection: Boolean
   removedPartners: [PartnerToHookInput]
   sex: Boolean
 }
