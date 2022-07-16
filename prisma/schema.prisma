@@ -201,6 +201,8 @@ enum HookType {
   Night
   one_time        @map("One Time")
   Hang
+  Virtual
+  Self
 }
 
 enum ProtectionType {

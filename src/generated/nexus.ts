@@ -133,7 +133,7 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   ContactType: "Email" | "Phone" | "social_media"
-  HookType: "Date" | "Friend" | "Hang" | "Night" | "Sexting" | "one_night_stand" | "one_time" | "self_pleasure" | "sex_friend"
+  HookType: "Date" | "Friend" | "Hang" | "Night" | "Self" | "Sexting" | "Virtual" | "one_night_stand" | "one_time" | "self_pleasure" | "sex_friend"
   LocationType: "my_place" | "other" | "your_place"
   Role: "ADMIN" | "MODERATOR" | "USER"
   SexPosition: "bottom" | "top" | "vers_bottom" | "vers_top" | "versa"
