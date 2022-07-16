@@ -105,8 +105,11 @@ input HookCreateInput {
 enum HookType {
   Date
   Friend
+  Hang
+  Night
   Sexting
   one_night_stand
+  one_time
   self_pleasure
   sex_friend
 }

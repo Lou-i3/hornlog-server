@@ -95,7 +95,7 @@ export const Hook = objectType({
 
 export const HookType = enumType({
     name: "HookType",
-    members: ['Date', 'one_night_stand', 'self_pleasure', 'sex_friend', 'Friend', 'Sexting'],
+    members: ['Date', 'one_night_stand', 'self_pleasure', 'sex_friend', 'Friend', 'Sexting', 'one_time', 'Night', 'Hang'],
     description: 'Types of Hook'
 })
 

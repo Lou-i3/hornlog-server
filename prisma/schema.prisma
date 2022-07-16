@@ -133,7 +133,6 @@ model Hook {
   protection       Boolean?
   note             String?
   grade            Int?
-  protected        ProtectionType?
   mood             Int?
   addToAppleHealth Boolean?
   archived         Boolean?
@@ -199,6 +198,9 @@ enum HookType {
   sex_friend       @map("Sex Friend")
   Friend
   Sexting
+  Night
+  one_time        @map("One Time")
+  Hang
 }
 
 enum ProtectionType {
