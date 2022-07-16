@@ -75,7 +75,6 @@ type Hook {
   penetration: Boolean
   pill: Boolean
   porn: Boolean
-  protected: ProtectionType
   protection: Boolean
   sex: Boolean
   updatedAt: DateTime!
@@ -96,7 +95,6 @@ input HookCreateInput {
   penetration: Boolean
   pill: Boolean
   porn: Boolean
-  protected: ProtectionType
   protection: Boolean
   sex: Boolean
 }
@@ -130,7 +128,6 @@ input HookUpdateInput {
   penetration: Boolean
   pill: Boolean
   porn: Boolean
-  protected: ProtectionType
   protection: Boolean
   removedPartners: [PartnerToHookInput]
   sex: Boolean
@@ -241,13 +238,6 @@ type Person {
   sexPosition: SexPosition
   sexuality: Sexuality
   updatedAt: DateTime!
-}
-
-"""Types of protection"""
-enum ProtectionType {
-  Protected
-  Unprotected
-  not_required
 }
 
 type Query {

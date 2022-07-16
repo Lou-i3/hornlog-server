@@ -60,7 +60,6 @@ export interface NexusGenInputs {
     penetration?: boolean | null; // Boolean
     pill?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
-    protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     protection?: boolean | null; // Boolean
     sex?: boolean | null; // Boolean
   }
@@ -80,7 +79,6 @@ export interface NexusGenInputs {
     penetration?: boolean | null; // Boolean
     pill?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
-    protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     protection?: boolean | null; // Boolean
     removedPartners?: Array<NexusGenInputs['PartnerToHookInput'] | null> | null; // [PartnerToHookInput]
     sex?: boolean | null; // Boolean
@@ -137,7 +135,6 @@ export interface NexusGenEnums {
   ContactType: "Email" | "Phone" | "social_media"
   HookType: "Date" | "Friend" | "Hang" | "Night" | "Sexting" | "one_night_stand" | "one_time" | "self_pleasure" | "sex_friend"
   LocationType: "my_place" | "other" | "your_place"
-  ProtectionType: "Protected" | "Unprotected" | "not_required"
   Role: "ADMIN" | "MODERATOR" | "USER"
   SexPosition: "bottom" | "top" | "vers_bottom" | "vers_top" | "versa"
   Sexuality: "Bi" | "Gay" | "Straight"
@@ -186,7 +183,6 @@ export interface NexusGenObjects {
     penetration?: boolean | null; // Boolean
     pill?: boolean | null; // Boolean
     porn?: boolean | null; // Boolean
-    protected?: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     protection?: boolean | null; // Boolean
     sex?: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -288,7 +284,6 @@ export interface NexusGenFieldTypes {
     penetration: boolean | null; // Boolean
     pill: boolean | null; // Boolean
     porn: boolean | null; // Boolean
-    protected: NexusGenEnums['ProtectionType'] | null; // ProtectionType
     protection: boolean | null; // Boolean
     sex: boolean | null; // Boolean
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -420,7 +415,6 @@ export interface NexusGenFieldTypeNames {
     penetration: 'Boolean'
     pill: 'Boolean'
     porn: 'Boolean'
-    protected: 'ProtectionType'
     protection: 'Boolean'
     sex: 'Boolean'
     updatedAt: 'DateTime'

@@ -51,7 +51,6 @@ export const Hook = objectType({
         t.boolean('protection')
         t.string('note')
         t.int('grade')
-        t.field('protected', { type: 'ProtectionType' })
         t.int('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
@@ -98,13 +97,6 @@ export const HookType = enumType({
     members: ['Date', 'one_night_stand', 'self_pleasure', 'sex_friend', 'Friend', 'Sexting', 'one_time', 'Night', 'Hang'],
     description: 'Types of Hook'
 })
-
-export const ProtectionType = enumType({
-    name: "ProtectionType",
-    members: ['Protected', 'Unprotected', 'not_required'],
-    description: 'Types of protection'
-})
-
 
 // queries 
 export const HookQuery = extendType({
@@ -209,7 +201,6 @@ export const HookMutation = extendType({
                         pill: args.data.pill,
                         note: args.data.note,
                         grade: args.data.grade,
-                        protected: args.data.protected,
                         mood: args.data.mood,
                         addToAppleHealth: args.data.addToAppleHealth,
                         archived: args.data.archived,
@@ -315,7 +306,6 @@ export const HookMutation = extendType({
                         pill: args.data.pill,
                         note: args.data.note,
                         grade: args.data.grade,
-                        protected: args.data.protected,
                         mood: args.data.mood,
                         addToAppleHealth: args.data.addToAppleHealth,
                         archived: args.data.archived,
@@ -359,7 +349,6 @@ export const HookCreateInput = inputObjectType({
         t.boolean('pill')
         t.string('note')
         t.int('grade')
-        t.field('protected', { type: 'ProtectionType' })
         t.int('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
@@ -384,7 +373,6 @@ export const HookUpdateInput = inputObjectType({
         t.boolean('pill')
         t.string('note')
         t.int('grade')
-        t.field('protected', { type: 'ProtectionType' })
         t.int('mood')
         t.boolean('addToAppleHealth')
         t.boolean('archived')
