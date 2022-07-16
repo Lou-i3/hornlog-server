@@ -102,16 +102,11 @@ input HookCreateInput {
 """Types of Hook"""
 enum HookType {
   Date
-  Friend
   Hang
   Night
   Self
-  Sexting
   Virtual
-  one_night_stand
   one_time
-  self_pleasure
-  sex_friend
 }
 
 input HookUpdateInput {

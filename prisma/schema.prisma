@@ -192,15 +192,10 @@ enum SexPosition {
 }
 
 enum HookType {
-  Date
-  one_night_stand  @map("One Night Stand")
-  self_pleasure    @map("Self Pleasure")
-  sex_friend       @map("Sex Friend")
-  Friend
-  Sexting
-  Night
-  one_time        @map("One Time")
   Hang
+  Date
+  one_time        @map("One Time")
+  Night
   Virtual
   Self
 }
