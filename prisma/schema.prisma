@@ -85,7 +85,7 @@ model Person {
   locations   Location[]
   gender      Gender?    @relation(fields: [genderId], references: [id])
   genderId    Int?
-  notes       String?    @db.VarChar(255)
+  notes       String?     @db.LongText
 
   sexPosition  SexPosition?
   contactInfos ContactInfo[]
@@ -120,10 +120,10 @@ model Hook {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  hookType         HookType        @default(Date)
+  hookType         HookType @default(Date)
   ownerId          Int
-  owner            User            @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  dateTime         DateTime        @default(now())
+  owner            User     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dateTime         DateTime @default(now())
   duration         Int?
   orgasm           Boolean?
   porn             Boolean?
@@ -131,7 +131,7 @@ model Hook {
   penetration      Boolean?
   pill             Boolean?
   protection       Boolean?
-  note             String?
+  note             String?  @db.LongText
   grade            Int?
   mood             Int?
   addToAppleHealth Boolean?
@@ -194,7 +194,7 @@ enum SexPosition {
 enum HookType {
   Hang
   Date
-  one_time        @map("One Time")
+  one_time  @map("One Time")
   Night
   Virtual
   Self
